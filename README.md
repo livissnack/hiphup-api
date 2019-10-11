@@ -1,4 +1,5 @@
 [![Heroku App Status](http://heroku-shields.herokuapp.com/hiphup-api)](https://hiphup-api.herokuapp.com)
+[![Build Status](https://travis-ci.org/livissnack/hiphup-api.svg?branch=master)](https://travis-ci.org/livissnack/hiphup-api)
 
 # Hiphup-api项目
 
