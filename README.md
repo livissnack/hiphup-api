@@ -11,32 +11,94 @@ This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
 
 1. 将.env文件中的变量全部配置在Config Vars里面
 2. 注意需要添加一个ENV_SILENT=true的变量，用于屏蔽.env文件报错
-3. Authentication
-4. Web security middleware
-5. CORS
-6. Edge template engine
-7. Lucid ORM
-8. Migrations and seeds
+3. 使用免费的Heroku进行部署
+4. 使用Heroku的免费数据库Postgres
+5. 域名地址：https://hiphup-api.herokuapp.com
+6. 用于研究各种类型接口
 
 ## 安装
 
-Use the adonis command to install the blueprint
+首先克隆代码到本地目录（git clone git@github.com:livissnack/hiphup-api.git），然后执行如下命令：
 
 ```bash
-adonis new yardstick
+cd hiphup-api
+npm install
+npm start
 ```
 
-or manually clone the repo and then run `npm install`.
-
-
 ## 部署
+注册![heroku](https://www.heroku.com)账号，创建app，为app添加附加组件数据库Postgres。
+选择部署方法为：Githup Connected，连接授权到githup，开启自动部署，并绑定travis-ci集成
+测试。然后每次修改代码后，git push，先集成测试，再自动部署到Heroku环境。
 
-Run the following command to run startup migrations.
-
-```js
-adonis migration:run
+```bash
+git add .
+git commit -am 'commit content'
+git push
 ```
 
 ## 功能明细
 
-## 版权所有
+### API列表
+
+| Url                        | Name             | Status    |
+| -------------------------- |:----------------:| ---------:|
+| /v1.0/news/baidu           | 百度新闻          |  active   |
+| /v1.0/news/toutiao         | 头条新闻          |  active   |
+| <ul><li>item1</li><li>item2</li></ul>| See the list | from the first column|
+
+### API接口
+
+#### 抓取百度新闻
+
+目前有4种新闻类别，对应的type是：
+- 推荐：popular
+- 体育: sport
+- 科技: tech
+- 汽车: car
+##### Request
+- Method: **GET**
+- URL:  
+    - crawler news:  ```/v1.0/news/baidu?type=tech&date=2019-10-12```
+- Headers：
+- Body:
+```
+```
+
+##### Response
+- Body
+```
+{
+  "code": 200,
+  "data": "730781",
+  "message": "OK"
+}
+```
+
+#### 抓取头条新闻
+
+目前有4种新闻类别，对应的type是：
+- 推荐：popular
+- 体育: sport
+- 科技: tech
+- 汽车: car
+##### Request
+- Method: **GET**
+- URL:  
+    - crawler news:  ```/v1.0/news/toutiao?type=tech&date=2019-10-12```
+- Headers：
+- Body:
+```
+```
+
+##### Response
+- Body
+```
+{
+  "code": 200,
+  "data": "730781",
+  "message": "OK"
+}
+```
+
+## 版权所有（MIT）
