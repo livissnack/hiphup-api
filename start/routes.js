@@ -14,6 +14,9 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
+const ApiVersion = 'v1.0'
 const Route = use('Route')
 
 Route.on('/').render('welcome')
+
+Route.get(`/${ApiVersion}/news/baidu`, 'CrawlerController.baidu')
