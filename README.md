@@ -27,7 +27,7 @@ npm start
 ```
 
 ## 部署
-注册![heroku](https://www.heroku.com)账号，创建app，为app添加附加组件数据库Postgres。
+注册[heroku](https://www.heroku.com)账号，创建app，为app添加附加组件数据库Postgres。
 选择部署方法为：Githup Connected，连接授权到githup，开启自动部署，并绑定travis-ci集成
 测试。然后每次修改代码后，git push，先集成测试，再自动部署到Heroku环境。
 
@@ -45,7 +45,6 @@ git push
 | -------------------------- |:----------------:| ---------:|
 | /v1.0/news/baidu           | 百度新闻          |  active   |
 | /v1.0/news/toutiao         | 头条新闻          |  active   |
-| <ul><li>item1</li><li>item2</li></ul>| See the list | from the first column|
 
 ### API接口
 
@@ -67,7 +66,7 @@ git push
 
 ##### Response
 - Body
-```
+```json
 {
   "code": 200,
   "data": "730781",
@@ -93,7 +92,7 @@ git push
 
 ##### Response
 - Body
-```
+```json
 {
   "code": 200,
   "data": "730781",
