@@ -14,7 +14,7 @@ This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
 3. 使用免费的Heroku进行部署
 4. 使用Heroku的免费数据库Postgres
 5. 域名地址：https://hiphup-api.herokuapp.com
-6. 用于研究各种类型接口
+6. 用于研究各种有意义的数据，封装成接口，便于使用
 
 ## 一、安装
 
@@ -74,6 +74,10 @@ git push
 }
 ```
 
+
+***
+
+
 #### 2、抓取头条新闻
 
 目前有4种新闻类别，对应的type是：
@@ -100,4 +104,4 @@ git push
 }
 ```
 
-## 四、版权所有（MIT）
+## 四、版权所有（[LivisSnack MIT](./LICENSE)）
