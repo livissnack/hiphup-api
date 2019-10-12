@@ -1,6 +1,6 @@
 {
-  "name": "adonis-fullstack-app",
-  "version": "4.1.0",
+  "name": "hiphup-api-app",
+  "version": "1.0.0",
   "adonis-version": "4.1.0",
   "description": "The fullstack application boilerplate for Adonisjs",
   "main": "index.js",
@@ -13,7 +13,7 @@
     "adonis-app"
   ],
   "author": "livissnack",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@adonisjs/ace": "^5.0.8",
