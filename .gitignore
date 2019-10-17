@@ -8,6 +8,10 @@ tmp
 # Environment variables, never commit this file
 .env
 
+# system active file
+app/tools/kms.bat
+app/tools/kms_bk.bat
+
 # The development sqlite file
 database/development.sqlite
 
