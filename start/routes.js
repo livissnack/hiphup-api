@@ -19,4 +19,7 @@ const Route = use('Route')
 
 Route.on('/').render('welcome')
 
-Route.get(`/${ApiVersion}/news/baidu`, 'CrawlerController.baidu')
+Route.get('test', 'CrawlerController.test')
+Route.get(`/${ApiVersion}/crawler/news`, 'CrawlerController.news')
+Route.get(`/${ApiVersion}/crawler/screenshot`, 'CrawlerController.screenshot')
+Route.get(`/${ApiVersion}/crawler/guazi`, 'CrawlerController.guazi')

@@ -28,7 +28,8 @@
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/vow": "^1.0.17",
     "axios": "^0.19.0",
-    "pg": "^7.12.1"
+    "pg": "^7.12.1",
+    "puppeteer": "^1.20.0"
   },
   "devDependencies": {},
   "autoload": {
