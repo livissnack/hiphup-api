@@ -4,7 +4,6 @@
 const Env = use('Env')
 
 module.exports = {
-
   /*
   |--------------------------------------------------------------------------
   | Application Name
@@ -81,7 +80,6 @@ module.exports = {
     |
     */
     jsonpCallback: 'callback',
-
 
     /*
     |--------------------------------------------------------------------------
@@ -188,7 +186,7 @@ module.exports = {
     | Available drivers are: `file` and `console`.
     |
     */
-    transport: 'console',
+    transport: 'file',
 
     /*
     |--------------------------------------------------------------------------
