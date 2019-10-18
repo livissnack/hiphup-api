@@ -11,3 +11,12 @@ insert_final_newline = true
 
 [*.md]
 trim_trailing_whitespace = false
+
+[*.js]
+quote_type = single
+
+[*.{html,less,css,json}]
+quote_type = double
+
+[package.json]
+indent_size = 2
