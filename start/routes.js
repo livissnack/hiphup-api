@@ -14,15 +14,17 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const ApiVersion = 'v1.0'
+const ApiVersion = 'v1'
 const Route = use('Route')
 
 Route.on('/').render('welcome')
 
-Route.get('test', 'CrawlerController.test')
-Route.get(`/${ApiVersion}/crawler/news`, 'CrawlerController.news')
-Route.get(`/${ApiVersion}/crawler/screenshot`, 'CrawlerController.screenshot')
-Route.get(`/${ApiVersion}/crawler/guazi`, 'CrawlerController.guazi')
+Route.group(() => {
+  Route.get('test', 'CrawlerController.test')
+  Route.get(`crawler/news`, 'CrawlerController.news')
+  Route.get(`crawler/screenshot`, 'CrawlerController.screenshot')
+  Route.get(`crawler/guazi`, 'CrawlerController.guazi')
 
-Route.post('import','ExcelController.import')
-Route.get('export','ExcelController.export')
+  Route.post('import', 'ExcelController.import')
+  Route.get('export', 'ExcelController.export')
+}).prefix(`api/${ApiVersion}`)

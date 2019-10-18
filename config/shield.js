@@ -27,8 +27,7 @@ module.exports = {
     | }
     |
     */
-    directives: {
-    },
+    directives: {},
     /*
     |--------------------------------------------------------------------------
     | Report only
@@ -134,7 +133,7 @@ module.exports = {
   csrf: {
     enable: true,
     methods: ['POST', 'PUT', 'DELETE'],
-    filterUris: ['/import', '/export'],
+    filterUris: ['/api/(.*)'],
     cookieOptions: {
       httpOnly: false,
       sameSite: true,
