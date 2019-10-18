@@ -9,7 +9,7 @@ tmp
 .env
 
 # system active file
-app/tools/kms.bat
+app/Tools/kms.bat
 
 # The development sqlite file
 database/development.sqlite

@@ -23,3 +23,6 @@ Route.get('test', 'CrawlerController.test')
 Route.get(`/${ApiVersion}/crawler/news`, 'CrawlerController.news')
 Route.get(`/${ApiVersion}/crawler/screenshot`, 'CrawlerController.screenshot')
 Route.get(`/${ApiVersion}/crawler/guazi`, 'CrawlerController.guazi')
+
+Route.post('import','ExcelController.import')
+Route.get('export','ExcelController.export')
