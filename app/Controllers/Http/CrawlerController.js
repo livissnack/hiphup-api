@@ -25,7 +25,8 @@ class CrawlerController {
       const gotoUrl = urlMap.get(type)
 
       const browser = await puppeteer.launch({
-        headless: true
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
       })
       const page = await browser.newPage()
 
@@ -128,7 +129,8 @@ class CrawlerController {
   async kms({ request, response }) {
     try {
       const browser = await puppeteer.launch({
-        headless: true
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
       })
       const page = await browser.newPage()
 
@@ -159,7 +161,8 @@ class CrawlerController {
   async guazi({ request, response }) {
     try {
       const browser = await puppeteer.launch({
-        headless: true
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
       })
       const page = await browser.newPage()
 
@@ -283,7 +286,10 @@ class CrawlerController {
   }
 
   async douban({ request, response }) {
-    const browser = await puppeteer.launch()
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    })
     const page = await browser.newPage()
     await page.goto('https://movie.douban.com/cinema/nowplaying/beijing/')
     const result = await page.evaluate(() => {

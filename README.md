@@ -67,7 +67,7 @@ git push
 
 - Method: **GET**
 - URL:
-  - crawler url: [/api/v1.0/crawler/news?type=baidu&date=2019-10-12](https://hiphup-api.herokuapp.com/api/v1.0/crawler/news?type=baidu)
+  - crawler url: [/api/v1.0/crawler/news?type=baidu](https://hiphup-api.herokuapp.com/api/v1.0/crawler/news?type=baidu)
 - Headers：
 - Body:
 
