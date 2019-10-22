@@ -3,11 +3,16 @@
 const axios = use('axios')
 const Logger = use('Logger')
 const { getTime } = require('../../Tools/helper')
+const puppeteer = require('puppeteer')
 
 class TestController {
   async index() {
-    const currentTime = getTime()
-    Logger.info(`this is code handle time is: ${currentTime}`)
+    puppeteer.launch().then(async browser => {
+      const page = await browser.newPage()
+      await page.goto('https://www.taobao.com')
+      await page.screenshot({ path: 'screenshot.png' })
+      await browser.close()
+    })
   }
 
   /**

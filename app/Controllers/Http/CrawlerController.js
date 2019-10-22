@@ -1,5 +1,6 @@
 'use strict'
 
+const Logger = use('Logger')
 const puppeteer = use('puppeteer')
 
 class CrawlerController {
@@ -179,6 +180,137 @@ class CrawlerController {
     } catch (err) {
       return response.json({ code: 500, message: error.toString() })
     }
+  }
+
+  /**
+   * 抓取免费的ss账号
+   * @param {*} param0
+   */
+  async freess({ request, response }) {
+    try {
+      const browser = await puppeteer.launch({
+        headless: false,
+        slowMo: 3000,
+        devtools: true
+      })
+      const page = await browser.newPage()
+
+      page.on('console', msg => {
+        for (let i = 0; i < msg.args().length; ++i)
+          console.log(`${i}: ${msg.args()[i]}`) // 译者注：这句话的效果是打印到你的代码的控制台
+      })
+
+      await page.goto('https://free-ss.site')
+
+      // await page.waitFor(2500)
+
+      const listData = await page.evaluate(() => {
+        let itemList = document.querySelectorAll('#tbss tbody tr')
+        console.log(1, itemList)
+        let result = []
+        for (let item of itemList) {
+          // console.log(2, item)
+          let text = item.querySelector('tr').innerText
+          // console.log(3, text)
+        }
+      })
+
+      return response.json({ code: 200, data: listData, message: 'ok' })
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() })
+    }
+  }
+
+  /**
+   * 抓取淘宝商品信息
+   * @param {*} param0
+   */
+  async taobao({ request, response }) {
+    try {
+      const browser = await puppeteer.launch({
+        headless: true
+      })
+      const page = await browser.newPage()
+      await page.goto(
+        'https://www.taobao.com/markets/3c/tbdc?spm=a21bo.2017.201867-links-3.52.5af911d9AIDAUY'
+      )
+      console.log('页面加载完毕')
+      for (let i = 1; i <= 5; i++) {
+        const pageInput = await page.$(`.J_Input[type='number']`)
+        const submit = await page.$('.J_Submit')
+        await pageInput.type('' + i)
+        await submit.click()
+        await page.waitFor(2500)
+        console.clear()
+        console.log('页面数据加载完毕')
+
+        const list = await page.evaluate(() => {
+          const writeDataList = []
+          let itemList = document.querySelectorAll('.item.J_MouserOnverReq')
+          for (let item of itemList) {
+            let writeData = {}
+            // 找到商品图片的地址
+            let img = item.querySelector('img')
+            writeData.picture = img.src
+
+            // 找到商品的链接
+            let link = item.querySelector('.pic-link.J_ClickStat.J_ItemPicA')
+            writeData.link = link.href
+
+            // 找到商品的价格，默认是string类型 通过~~转换为整数number类型
+            let price = item.querySelector('strong')
+            writeData.price = ~~price.innerText
+
+            // 找到商品的标题，淘宝的商品标题有高亮效果，里面有很多的span标签，不过一样可以通过innerText获取文本信息
+            let title = item.querySelector('.title>a')
+
+            writeData.title = title.innerText
+
+            // 将这个标签页的数据push进刚才声明的结果数组
+            writeDataList.push(writeData)
+          }
+          // 当前页面所有的返回给外部环境
+          return writeDataList
+        })
+        console.log(list)
+        await page.waitFor(2500)
+      }
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() })
+    } finally {
+      process.exit(0)
+    }
+  }
+
+  async douban({ request, response }) {
+    const browser = await puppeteer.launch()
+    const page = await browser.newPage()
+    await page.goto('https://movie.douban.com/cinema/nowplaying/beijing/')
+    const result = await page.evaluate(() => {
+      const items = document.querySelectorAll(
+        '#nowplaying > div.mod-bd > ul >li'
+      )
+      const links = []
+      if (items.length >= 1) {
+        items.forEach(item => {
+          const data = Array.from(item.attributes)
+          const link = {}
+          data.forEach(v => {
+            link[v.nodeName] = v.value
+          })
+          const a = item.querySelector('.poster > a')
+          const img = a.querySelector('img')
+          link.href = a.getAttribute('href')
+          link.src = img.getAttribute('src')
+          links.push({
+            ...link
+          })
+        })
+      }
+      return links
+    })
+    await browser.close()
+    return response.json({ code: 200, data: result, message: 'ok' })
   }
 }
 

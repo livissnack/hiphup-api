@@ -48,6 +48,7 @@ git push
 | 1   |   /v1.0/crawler/news   |           聚合新闻           | active |
 | 2   | /v1.0/crawler/soft_kms | W10 和 office 激活服务器地址 | active |
 | 3   |  /v1.0/crawler/guazi   |            瓜子网            | active |
+| 3   |  /v1.0/crawler/douban  |           豆瓣电影           | active |
 
 ### API 接口
 
@@ -187,6 +188,54 @@ slmgr /ato
     "宝骏",
     "标致",
     "..."
+  ],
+  "message": "ok"
+}
+```
+
+#### 4、抓取豆瓣电影
+
+- 说明：豆瓣电影信息抓取
+
+##### Request
+
+- Method: **GET**
+- URL:
+  - crawler url: [/api/v1.0/crawler/douban](https://hiphup-api.herokuapp.com/api/v1.0/crawler/douban)
+- Headers：
+- Body:
+
+```
+
+```
+
+##### Response
+
+- Body
+
+```json
+{
+  "code": 200,
+  "data": [
+    {
+      "id": "3097572",
+      "class": "list-item",
+      "data-title": "双子杀手",
+      "data-score": "7.1",
+      "data-star": "35",
+      "data-release": "2019",
+      "data-duration": "117分钟",
+      "data-region": "美国 中国大陆",
+      "data-director": "李安",
+      "data-actors": "威尔·史密斯 / 玛丽·伊丽莎白·温斯特德 / 克里夫·欧文",
+      "data-category": "nowplaying",
+      "data-enough": "True",
+      "data-showed": "True",
+      "data-votecount": "92122",
+      "data-subject": "3097572",
+      "href": "https://movie.douban.com/subject/3097572/?from=playing_poster",
+      "src": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2570906505.webp"
+    }
   ],
   "message": "ok"
 }

@@ -26,6 +26,9 @@ Route.group(() => {
   Route.get(`crawler/screenshot`, 'CrawlerController.screenshot')
   Route.get(`crawler/guazi`, 'CrawlerController.guazi')
   Route.get(`crawler/kms`, 'CrawlerController.kms')
+  Route.get(`crawler/freess`, 'CrawlerController.freess')
+  Route.get(`crawler/taobao`, 'CrawlerController.taobao')
+  Route.get(`crawler/douban`, 'CrawlerController.douban')
 
   Route.post('import', 'ExcelController.import')
   Route.get('export', 'ExcelController.export')
