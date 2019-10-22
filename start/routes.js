@@ -19,8 +19,9 @@ const Route = use('Route')
 
 Route.on('/').render('welcome')
 
+Route.get('test', 'TestController.index')
+
 Route.group(() => {
-  Route.get('test', 'CrawlerController.test')
   Route.get(`crawler/news`, 'CrawlerController.news')
   Route.get(`crawler/screenshot`, 'CrawlerController.screenshot')
   Route.get(`crawler/guazi`, 'CrawlerController.guazi')

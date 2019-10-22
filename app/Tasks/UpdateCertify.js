@@ -18,7 +18,6 @@ class UpdateCertify extends Task {
         this.info('update ssl task handle log', stdout)
       }
     })
-    this.info('Task UpdateCertify handle')
   }
 }
 

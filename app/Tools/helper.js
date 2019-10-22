@@ -1,3 +1,5 @@
+const dayjs = require('dayjs')
+
 module.exports = {
   numToStr(num) {
     if (num > 26 && num < 0) {
@@ -15,5 +17,9 @@ module.exports = {
       arr.push(i)
     }
     return arr
+  },
+
+  getTime() {
+    return dayjs().format('YYYY-MM-DD HH:mm:ss')
   }
 }
