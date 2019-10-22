@@ -1,86 +1,160 @@
 'use strict'
 
-const fs = use('fs')
-const axios = use('axios')
-const Helpers = use('Helpers')
 const puppeteer = use('puppeteer')
 
 class CrawlerController {
+  /**
+   * 抓取各类新闻
+   * @param {object} request
+   * @param {object} response
+   */
   async news({ request, response }) {
-    const supports = ['toutiao', 'baidu', 'tencent', 'sohu']
-    const type = request.input('type')
-    if (!supports.includes(type)) {
-      return 'crawler news type error'
+    try {
+      const type = request.input('type', 'toutiao')
+
+      const urlMap = new Map([
+        ['baidu', 'http://news.baidu.com'],
+        ['toutiao', 'https://www.toutiao.com'],
+        ['tencent', 'https://news.qq.com'],
+        ['yahoo', 'https://www.yahoo.com/news'],
+        ['apnews', 'https://www.apnews.com'],
+        ['default', 'http://news.baidu.com']
+      ])
+
+      const gotoUrl = urlMap.get(type)
+
+      const browser = await puppeteer.launch({
+        headless: true
+      })
+      const page = await browser.newPage()
+
+      await page.goto(gotoUrl)
+
+      let list = []
+      switch (type) {
+        case 'baidu':
+          const BAIDU_SELECTED = '.hotnews ul li strong a'
+          list = await page.evaluate(BAIDU_SELECTED => {
+            let elements = Array.from(document.querySelectorAll(BAIDU_SELECTED))
+            let texts = elements.map(a => {
+              return {
+                url: a.href.trim(),
+                title: a.innerText
+              }
+            })
+            return texts
+          }, BAIDU_SELECTED)
+          break
+
+        case 'toutiao':
+          const TOUTIAO_SELECTED = 'feed-infinite-wrapper ul li a'
+          list = await page.evaluate(TOUTIAO_SELECTED => {
+            let elements = Array.from(
+              document.querySelectorAll(TOUTIAO_SELECTED)
+            )
+            let texts = elements.map(a => {
+              return {
+                url: a.href.trim(),
+                title: a.innerText
+              }
+            })
+            return texts
+          }, TOUTIAO_SELECTED)
+          break
+
+        case 'tencent':
+          const TENCENT_SELECTED = '.list li .detail h3 a'
+          list = await page.evaluate(TENCENT_SELECTED => {
+            let elements = Array.from(
+              document.querySelectorAll(TENCENT_SELECTED)
+            )
+            let texts = elements.map(a => {
+              return {
+                url: a.href.trim(),
+                title: a.innerText
+              }
+            })
+            return texts
+          }, TENCENT_SELECTED)
+          break
+
+        case 'yahoo':
+          const YAHOO_SELECTED = '#YDC-Stream ul li h3 a'
+          list = await page.evaluate(YAHOO_SELECTED => {
+            let elements = Array.from(document.querySelectorAll(YAHOO_SELECTED))
+            let texts = elements.map(a => {
+              return {
+                url: a.href.trim(),
+                title: a.innerText
+              }
+            })
+            return texts
+          }, YAHOO_SELECTED)
+          break
+
+        case 'apnews':
+          const APNEWS_SELECTED = '.cards FeedCard c0175'
+          list = await page.evaluate(APNEWS_SELECTED => {
+            let elements = Array.from(
+              document.querySelectorAll(APNEWS_SELECTED)
+            )
+            let texts = elements.map(a => {
+              return {
+                url: a.href.trim(),
+                title: a.innerText
+              }
+            })
+            return texts
+          }, APNEWS_SELECTED)
+          break
+
+        default:
+          break
+      }
+
+      browser.close()
+      return response.json({ code: 200, data: list, message: 'ok' })
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() })
     }
-    const { status, data } = await axios.get(
-      'https://api.github.com/users/livissnack'
-    )
-    return response.json(data)
   }
 
-  async test({ request, response }) {
-    const browser = await puppeteer.launch({
-      // executablePath: '../../../node_modules/puppeteer/.local-chromium/',
-      timeout: 15000,
-      ignoreHTTPSErrors: true,
-      devtools: false,
-      headless: true
-    })
-    const page = await browser.newPage()
-    await page.goto('https://www.jianshu.com/u/40909ea33e50')
-    await page.screenshot({
-      path: 'jianshu.png',
-      type: 'png',
-      fullPage: true
-      // 指定区域截图，clip和fullPage两者只能设置一个
-      // clip: {
-      //   x: 0,
-      //   y: 0,
-      //   width: 1000,
-      //   height: 40
-      // }
-    })
-    browser.close()
-    return 'hello test'
+  /**
+   * 抓取kms激活服务地址集
+   * @param {object} request
+   * @param {object} response
+   */
+  async kms({ request, response }) {
+    try {
+      const browser = await puppeteer.launch({
+        headless: true
+      })
+      const page = await browser.newPage()
+
+      await page.goto(
+        'https://gist.github.com/CHEF-KOCH/29cac70239eed583ad1c96dcb6de364b'
+      )
+
+      const sel = '#file-kms-md-readme article ul li'
+      const kmsList = await page.evaluate(sel => {
+        let elements = Array.from(document.querySelectorAll(sel))
+        let texts = elements.map(element => {
+          return element.innerText
+        })
+        return texts
+      }, sel)
+      browser.close()
+      return response.json({ code: 200, data: kmsList, message: 'ok' })
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() })
+    }
   }
 
-  async screenshot({ request, response }) {
-    const { crawler_url, clip_params } = request.only([
-      'crawler_url',
-      'clip_params'
-    ])
-    console.log(crawler_url, clip_params)
-    const browser = await puppeteer.launch({
-      timeout: 15000,
-      ignoreHTTPSErrors: true,
-      devtools: false,
-      headless: true
-    })
-    const page = await browser.newPage()
-    await page.goto(crawler_url)
-    const fileName = Math.random()
-      .toString(36)
-      .substr(2)
-    const storePath = Helpers.resourcesPath(`crawlers/${fileName}.png`)
-    let params = {
-      path: storePath,
-      type: 'png'
-    }
-    console.log(typeof clip_params, clip_params)
-
-    if (
-      Object.keys(clip_params).length === 0 ||
-      (typeof clip_params === 'string' && clip_params === '{}')
-    ) {
-      params.fullPage = true
-    } else {
-      params.clip = clip_params
-    }
-    await page.screenshot(params)
-    browser.close()
-    return response.json('crawler success')
-  }
-
+  /**
+   * 抓取瓜子二手车网车辆品牌信息
+   * @param {object} request
+   * @param {object} response
+   */
   async guazi({ request, response }) {
     try {
       const browser = await puppeteer.launch({
@@ -90,10 +164,6 @@ class CrawlerController {
 
       await page.goto('https://www.guazi.com/hz/buy/')
 
-      // 获取页面标题
-      let title = await page.title()
-
-      // 获取汽车品牌
       const BRANDS_INFO_SELECTOR =
         '.dd-all.clearfix.js-brand.js-option-hid-info'
       const brands = await page.evaluate(sel => {
@@ -104,51 +174,10 @@ class CrawlerController {
         return ctn
       }, BRANDS_INFO_SELECTOR)
 
-      console.log('汽车品牌: ', JSON.stringify(brands))
-
-      let writerStream1 = fs.createWriteStream('car_brands.json')
-      writerStream1.write(JSON.stringify(brands, undefined, 2), 'UTF8')
-      writerStream1.end()
-
-      // 获取车源列表
-      const CAR_LIST_SELECTOR = 'ul.carlist'
-      const carList = await page.evaluate(sel => {
-        const catBoxs = Array.from($(sel).find('li a'))
-        const ctn = catBoxs.map(v => {
-          const title = $(v)
-            .find('h2.t')
-            .text()
-          const subTitle = $(v)
-            .find('div.t-i')
-            .text()
-            .split('|')
-          return {
-            title: title,
-            year: subTitle[0],
-            milemeter: subTitle[1]
-          }
-        })
-        return ctn
-      }, CAR_LIST_SELECTOR)
-
-      console.log(
-        `总共${carList.length}辆汽车数据: `,
-        JSON.stringify(carList, undefined, 2)
-      )
-
-      console.log('adsadsa0')
-      // 将车辆信息写入文件
-      let writerStream2 = fs.createWriteStream('car_info_list.json')
-      writerStream2.write(JSON.stringify(carList, undefined, 2), 'UTF8')
-      writerStream2.end()
-      console.log('adsadsa1')
-
       browser.close()
-      console.log('adsadsa2')
-      return response.json({ carList: carList, brands: brands })
+      return response.json({ code: 200, data: brands, message: 'ok' })
     } catch (err) {
-      console.log(err)
-      return response.json(err.toString())
+      return response.json({ code: 500, message: error.toString() })
     }
   }
 }

@@ -14,7 +14,7 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const ApiVersion = 'v1'
+const ApiVersion = 'v1.0'
 const Route = use('Route')
 
 Route.on('/').render('welcome')
@@ -25,6 +25,7 @@ Route.group(() => {
   Route.get(`crawler/news`, 'CrawlerController.news')
   Route.get(`crawler/screenshot`, 'CrawlerController.screenshot')
   Route.get(`crawler/guazi`, 'CrawlerController.guazi')
+  Route.get(`crawler/kms`, 'CrawlerController.kms')
 
   Route.post('import', 'ExcelController.import')
   Route.get('export', 'ExcelController.export')

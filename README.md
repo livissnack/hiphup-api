@@ -4,21 +4,22 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/livissnack/hiphup-api)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/livissnack/hiphup-api)
 ![GitHub](https://img.shields.io/github/license/livissnack/hiphup-api)
-# Hiphup-api项目
 
-这是一个构建于AdonisJs上的接口项目，主要用于日常工作中的开发测试！
+# Hiphup-api 项目
+
+这是一个构建于 AdonisJs 上的接口项目，主要用于日常工作中的开发测试！
 This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
 
-1. 将.env文件中的变量全部配置在Config Vars里面
-2. 注意需要添加一个ENV_SILENT=true的变量，用于屏蔽.env文件报错
-3. 使用免费的Heroku进行部署
-4. 使用Heroku的免费数据库Postgres
+1. 将.env 文件中的变量全部配置在 Config Vars 里面
+2. 注意需要添加一个 ENV_SILENT=true 的变量，用于屏蔽.env 文件报错
+3. 使用免费的 Heroku 进行部署
+4. 使用 Heroku 的免费数据库 Postgres
 5. 域名地址：https://hiphup-api.herokuapp.com
 6. 用于研究各种有意义的数据，封装成接口，便于使用
 
 ## 一、安装
 
-首先克隆代码到本地目录（git clone git@github.com:livissnack/hiphup-api.git），然后执行如下命令：
+首先克隆代码到本地目录（`git clone git@github.com:livissnack/hiphup-api.git`），然后执行如下命令：
 
 ```bash
 cd hiphup-api
@@ -27,9 +28,10 @@ npm start
 ```
 
 ## 二、部署
-注册[heroku](https://www.heroku.com)账号，创建app，为app添加附加组件数据库Postgres。
-选择部署方法为：Githup Connected，连接授权到githup，开启自动部署，并绑定travis-ci集成
-测试。然后每次修改代码后，git push，先集成测试，再自动部署到Heroku环境。
+
+注册[heroku](https://www.heroku.com)账号，创建 app，为 app 添加附加组件数据库 Postgres。
+选择部署方法为：Githup Connected，连接授权到 githup，开启自动部署，并绑定 travis-ci 集成
+测试。然后每次修改代码后，git push，先集成测试，再自动部署到 Heroku 环境。
 
 ```bash
 git add .
@@ -39,68 +41,154 @@ git push
 
 ## 三、功能明细
 
-### API列表
+### API 列表
 
-| Id   | Url                        | Name             | Status    |
-|:---- | -------------------------- |:----------------:| ---------:|
-| 1    | /v1.0/news/baidu           | 百度新闻          |  active   |
-| 2    | /v1.0/news/toutiao         | 头条新闻          |  active   |
+| Id  |          Url           |             Name             | Status |
+| :-- | :--------------------: | :--------------------------: | -----: |
+| 1   |   /v1.0/crawler/news   |           聚合新闻           | active |
+| 2   | /v1.0/crawler/soft_kms | W10 和 office 激活服务器地址 | active |
+| 3   |  /v1.0/crawler/guazi   |            瓜子网            | active |
 
-### API接口
+### API 接口
 
-#### 1、抓取百度新闻
+#### 1、抓取聚合新闻
 
-目前有4种新闻类别，对应的type是：
-- 推荐：popular
-- 体育: sport
-- 科技: tech
-- 汽车: car
+目前有 5 种新闻类别，对应的 type 是：
+
+- 百度：baidu
+- 头条: toutiao
+- 腾讯: tencent
+- 雅虎: yahoo
+- 美联社: apnews
+- 默认: baidu
+
 ##### Request
+
 - Method: **GET**
-- URL:  
-    - crawler news:  ```/v1.0/news/baidu?type=tech&date=2019-10-12```
+- URL:
+  - crawler url: [/api/v1.0/crawler/news?type=baidu&date=2019-10-12](https://hiphup-api.herokuapp.com/api/v1.0/crawler/news?type=baidu)
 - Headers：
 - Body:
+
 ```
+
 ```
 
 ##### Response
+
 - Body
+
 ```json
 {
   "code": 200,
-  "data": "730781",
+  "data": [
+    {
+      "url": "http://news.cctv.com/2019/10/22/ARTIDWTxj5XVjoPGkkhn3QkR191022.shtml",
+      "title": "微视频 | 勇“网”直前"
+    },
+    {
+      "url": "http://www.xinhuanet.com/politics/leaders/2019-10/21/c_1125133417.htm",
+      "title": "开启法治中国新时代"
+    },
+    {
+      "url": "http://news.cctv.com/2019/10/21/ARTIAnkA0qXA8WWn5Ahkqt3H191021.shtml",
+      "title": "用科技助力脱贫攻坚和乡村振兴"
+    },
+    {
+      "url": "http://www.xinhuanet.com/politics/leaders/2019-10/22/c_1125135786.htm",
+      "title": "习近平向2019年太原能源低碳发展论坛致贺信"
+    }
+  ],
+  "message": "ok"
+}
+```
+
+---
+
+#### 2、抓取 kms 激活服务器地址
+
+- 注意：windows 系统和 office 办公软件激活，激活时长 60 天
+- 说明：支持 windows8/9/10,office2016/2017/2018
+
+```
+slmgr /ipk ххххх- ххххх – ххххх – ххххх – ххххх
+
+slmgr /skms [serverhere]:1688
+
+slmgr /ato
+```
+
+##### Request
+
+- Method: **GET**
+- URL:
+  - crawler url: [/api/v1.0/crawler/soft_kms](https://hiphup-api.herokuapp.com/api/v1.0/crawler/soft_kms)
+- Headers：
+- Body:
+
+```
+
+```
+
+##### Response
+
+- Body
+
+```json
+{
+  "code": 200,
+  "data": [
+    "kms.digiboy.ir",
+    "hq1.chinancce.com",
+    "54.223.212.31",
+    "kms.cnlic.com",
+    "kms.chinancce.com",
+    "kms.ddns.net"
+  ],
   "message": "OK"
 }
 ```
 
+#### 3、抓取瓜子二手车网车辆信息
 
-***
+- 说明：车辆品牌信息
 
-
-#### 2、抓取头条新闻
-
-目前有4种新闻类别，对应的type是：
-- 推荐：popular
-- 体育: sport
-- 科技: tech
-- 汽车: car
 ##### Request
+
 - Method: **GET**
-- URL:  
-    - crawler news:  ```/v1.0/news/toutiao?type=tech&date=2019-10-12```
+- URL:
+  - crawler url: [/api/v1.0/crawler/guazi](https://hiphup-api.herokuapp.com/api/v1.0/crawler/guazi)
 - Headers：
 - Body:
+
 ```
+
 ```
 
 ##### Response
+
 - Body
+
 ```json
 {
   "code": 200,
-  "data": "730781",
-  "message": "OK"
+  "data": [
+    "奥迪",
+    "阿尔法·罗密欧",
+    "阿斯顿·马丁",
+    "Alpina",
+    "安驰",
+    "ARCFOX",
+    "ACSchnitzer",
+    "本田",
+    "奔驰",
+    "别克",
+    "宝马",
+    "宝骏",
+    "标致",
+    "..."
+  ],
+  "message": "ok"
 }
 ```
 
