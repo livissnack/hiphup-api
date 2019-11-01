@@ -1,13 +1,11 @@
 'use strict'
 
 const axios = use('axios')
-const FlakeId = use('flake-idgen')
-const Intformat = use('biguint-format')
+const { randomString } = require('../../Tools/helper')
 
 class TestController {
   async index() {
-    const flakeIdGen1 = new FlakeId()
-    return Intformat(flakeIdGen1.next(), 'hex')
+    return randomString(8, { letters: true, numbers: true, specials: false })
   }
 
   /**

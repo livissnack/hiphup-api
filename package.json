@@ -29,17 +29,15 @@
     "@adonisjs/vow": "^1.0.17",
     "adonis-scheduler": "^3.0.2",
     "axios": "^0.19.0",
-    "biguint-format": "^1.0.1",
     "dayjs": "^1.8.16",
     "exceljs": "^3.1.0",
-    "flake-idgen": "^1.1.2",
     "lodash": "^4.17.15",
+    "set-value": ">=3.0.1",
     "mysql": "^2.17.1",
     "puppeteer": "^1.20.0"
   },
   "devDependencies": {
-    "knex": ">=0.19.5",
-    "set-value": ">=2.0.1"
+    "knex": ">=0.19.5"
   },
   "autoload": {
     "App": "./app"

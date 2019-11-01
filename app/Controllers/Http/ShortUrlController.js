@@ -1,13 +1,15 @@
 'use strict'
 
-const FlakeId = use('flake-idgen')
-const Intformat = use('biguint-format')
 const ShortUrl = use('App/Models/ShortUrl')
+const { randomString } = require('../../Tools/helper')
 
 class ShortUrlController {
   async create({ response }) {
-    const flakeIdGen = new FlakeId()
-    const flakeId = Intformat(flakeIdGen.next(), 'hex')
+    const flakeId = randomString(8, {
+      letters: true,
+      numbers: true,
+      specials: false
+    })
     return response.json({
       status: 'success',
       msg: '生成成功',
