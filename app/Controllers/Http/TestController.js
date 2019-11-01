@@ -1,18 +1,13 @@
 'use strict'
 
 const axios = use('axios')
-const Logger = use('Logger')
-const { getTime } = require('../../Tools/helper')
-const puppeteer = require('puppeteer')
+const FlakeId = use('flake-idgen')
+const Intformat = use('biguint-format')
 
 class TestController {
   async index() {
-    puppeteer.launch().then(async browser => {
-      const page = await browser.newPage()
-      await page.goto('https://www.taobao.com')
-      await page.screenshot({ path: 'screenshot.png' })
-      await browser.close()
-    })
+    const flakeIdGen1 = new FlakeId()
+    return Intformat(flakeIdGen1.next(), 'hex')
   }
 
   /**

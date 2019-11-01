@@ -32,4 +32,8 @@ Route.group(() => {
 
   Route.post('import', 'ExcelController.import')
   Route.get('export', 'ExcelController.export')
+
+  Route.get('short_url', 'ShortUrlController.create')
+  Route.post('short_url', 'ShortUrlController.store')
+  Route.get('short_url/:flake_id', 'ShortUrlController.redirect')
 }).prefix(`api/${ApiVersion}`)
