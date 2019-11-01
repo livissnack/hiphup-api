@@ -39,7 +39,9 @@ class ShortUrlController {
   async redirect({ params, response }) {
     const { flake_id } = params
     const shortUrl = await ShortUrl.findBy('flake_id', flake_id)
-    response.redirect(shortUrl.target_url, false, 301)
+    if (parseInt(shortUrl.status) === 0) {
+      return response.redirect(shortUrl.target_url, false, 301)
+    }
   }
 }
 
