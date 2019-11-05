@@ -25,7 +25,15 @@ class CrawlerController {
 
       const browser = await puppeteer.launch({
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '–disable-gpu',
+          '–disable-dev-shm-usage',
+          '–no-first-run',
+          '–no-zygote',
+          '–single-process'
+        ]
       })
       const page = await browser.newPage()
 
@@ -129,7 +137,15 @@ class CrawlerController {
     try {
       const browser = await puppeteer.launch({
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '–disable-gpu',
+          '–disable-dev-shm-usage',
+          '–no-first-run',
+          '–no-zygote',
+          '–single-process'
+        ]
       })
       const page = await browser.newPage()
 
@@ -161,7 +177,15 @@ class CrawlerController {
     try {
       const browser = await puppeteer.launch({
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '–disable-gpu',
+          '–disable-dev-shm-usage',
+          '–no-first-run',
+          '–no-zygote',
+          '–single-process'
+        ]
       })
       const page = await browser.newPage()
 
@@ -248,7 +272,15 @@ class CrawlerController {
   async douban({ request, response }) {
     const browser = await puppeteer.launch({
       headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '–disable-gpu',
+        '–disable-dev-shm-usage',
+        '–no-first-run',
+        '–no-zygote',
+        '–single-process'
+      ]
     })
     const page = await browser.newPage()
     await page.goto('https://movie.douban.com/cinema/nowplaying/beijing/')
