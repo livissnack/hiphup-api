@@ -1,6 +1,5 @@
 'use strict'
 
-const Logger = use('Logger')
 const puppeteer = use('puppeteer')
 
 class CrawlerController {
