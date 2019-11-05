@@ -10,7 +10,7 @@ class CrawlerController {
    */
   async news({ request, response }) {
     try {
-      const type = request.input('type', 'toutiao')
+      const type = request.input('type', 'baidu')
 
       const urlMap = new Map([
         ['baidu', 'http://news.baidu.com'],
@@ -94,7 +94,7 @@ class CrawlerController {
           break
 
         case 'apnews':
-          const APNEWS_SELECTED = '.cards FeedCard c0175'
+          const APNEWS_SELECTED = '.cards FeedCard Component-headline-0-2-29'
           list = await page.evaluate(APNEWS_SELECTED => {
             let elements = Array.from(
               document.querySelectorAll(APNEWS_SELECTED)
@@ -179,45 +179,6 @@ class CrawlerController {
 
       browser.close()
       return response.json({ code: 200, data: brands, message: 'ok' })
-    } catch (err) {
-      return response.json({ code: 500, message: error.toString() })
-    }
-  }
-
-  /**
-   * 抓取免费的ss账号
-   * @param {*} param0
-   */
-  async freess({ request, response }) {
-    try {
-      const browser = await puppeteer.launch({
-        headless: false,
-        slowMo: 3000,
-        devtools: true
-      })
-      const page = await browser.newPage()
-
-      page.on('console', msg => {
-        for (let i = 0; i < msg.args().length; ++i)
-          console.log(`${i}: ${msg.args()[i]}`) // 译者注：这句话的效果是打印到你的代码的控制台
-      })
-
-      await page.goto('https://free-ss.site')
-
-      // await page.waitFor(2500)
-
-      const listData = await page.evaluate(() => {
-        let itemList = document.querySelectorAll('#tbss tbody tr')
-        console.log(1, itemList)
-        let result = []
-        for (let item of itemList) {
-          // console.log(2, item)
-          let text = item.querySelector('tr').innerText
-          // console.log(3, text)
-        }
-      })
-
-      return response.json({ code: 200, data: listData, message: 'ok' })
     } catch (error) {
       return response.json({ code: 500, message: error.toString() })
     }
