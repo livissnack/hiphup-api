@@ -18,6 +18,7 @@ class CrawlerController {
         ['tencent', 'https://news.qq.com'],
         ['yahoo', 'https://www.yahoo.com/news'],
         ['apnews', 'https://www.apnews.com'],
+        ['qichun', 'http://www.qichun.gov.cn/'],
         ['default', 'http://news.baidu.com']
       ]);
 
@@ -119,6 +120,22 @@ class CrawlerController {
             });
             return texts;
           }, APNEWS_SELECTED);
+          break;
+
+        case 'qichun':
+          const QICHUN_SELECTED = '.xwlist ul li a';
+          list = await page.evaluate(QICHUN_SELECTED => {
+            let elements = Array.from(
+              document.querySelectorAll(QICHUN_SELECTED)
+            );
+            let texts = elements.map(a => {
+              return {
+                url: a.href.trim(),
+                title: a.innerText
+              };
+            });
+            return texts;
+          }, QICHUN_SELECTED);
           break;
 
         default:
