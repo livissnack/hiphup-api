@@ -4,37 +4,25 @@ const ShortUrl = use('App/Models/ShortUrl')
 const { randomString } = require('../../Tools/helper')
 
 class ShortUrlController {
-  async create({ response }) {
+  async create() {
     const flakeId = randomString(8, {
       letters: true,
       numbers: true,
       specials: false
     })
-    return response.json({
-      status: 'success',
-      msg: '生成成功',
-      data: flakeId
-    })
+    return flakeId
   }
 
-  async store({ request, response }) {
+  async store({ request }) {
     const { flake_id, target_url } = request.only(['flake_id', 'target_url'])
     try {
       const shortUrl = new ShortUrl()
       shortUrl.flake_id = flake_id
       shortUrl.target_url = target_url
       const result = await shortUrl.save()
-      return response.json({
-        status: 'success',
-        msg: '保存成功',
-        data: result
-      })
+      return result
     } catch (error) {
-      return response.json({
-        status: 'failure',
-        msg: '保存失败',
-        data: error.toString()
-      })
+      return error.toString()
     }
   }
 

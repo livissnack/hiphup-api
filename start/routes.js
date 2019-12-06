@@ -19,7 +19,8 @@ const Route = use('Route')
 
 Route.on('/').render('welcome')
 
-Route.get('test', 'TestController.index')
+Route.get('test', 'PayController.index')
+Route.get('qrcode', 'QrcodeController.index')
 
 Route.group(() => {
   Route.get(`crawler/news`, 'CrawlerController.news')
