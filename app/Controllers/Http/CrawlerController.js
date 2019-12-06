@@ -258,6 +258,42 @@ class CrawlerController {
     await browser.close();
     return response.json({ code: 200, data: result, message: 'ok' });
   }
+
+  /**
+   * 抓取必应每日最新高清壁纸
+   * @param {*} param0
+   */
+  async bing({ request, response }) {
+    try {
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '–disable-gpu',
+          '–disable-dev-shm-usage',
+          '–no-first-run',
+          '–no-zygote',
+          '–single-process'
+        ]
+      });
+      const page = await browser.newPage();
+      const url = `https://cn.bing.com`;
+
+      await page.goto(url);
+
+      const sel = '#bgImgProgLoad';
+
+      const res = await page.$eval(sel, e => {
+        return e.getAttribute('data-ultra-definition-src');
+      });
+      browser.close();
+      const bgUrl = `${url}${res}`;
+      return response.json({ code: 200, data: bgUrl, message: 'ok' });
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() });
+    }
+  }
 }
 
 module.exports = CrawlerController;
