@@ -19,7 +19,7 @@ const Route = use('Route');
 
 Route.on('/').render('welcome');
 
-Route.get('test', 'PayController.index');
+Route.get('test', 'TestController.index');
 Route.get('qrcode', 'QrcodeController.index');
 
 Route.group(() => {
