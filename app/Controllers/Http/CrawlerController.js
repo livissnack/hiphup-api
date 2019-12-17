@@ -19,7 +19,6 @@ class CrawlerController {
         ['yahoo', 'https://www.yahoo.com/news'],
         ['apnews', 'https://www.apnews.com'],
         ['qichun', 'http://www.qichun.gov.cn/'],
-        ['hubei', 'http://www.hubei.gov.cn/'],
         ['default', 'http://news.baidu.com']
       ]);
 
@@ -137,22 +136,6 @@ class CrawlerController {
             });
             return texts;
           }, QICHUN_SELECTED);
-          break;
-
-        case 'hubei':
-          const HUBEI_SELECTED = '.news_list li .news_title';
-          list = await page.evaluate(HUBEI_SELECTED => {
-            let elements = Array.from(
-              document.querySelectorAll(HUBEI_SELECTED)
-            );
-            let texts = elements.map(a => {
-              return {
-                url: a.href.trim(),
-                title: a.innerText
-              };
-            });
-            return texts;
-          }, HUBEI_SELECTED);
           break;
 
         default:

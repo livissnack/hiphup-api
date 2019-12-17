@@ -24,10 +24,8 @@ Route.get('qrcode', 'QrcodeController.index');
 
 Route.group(() => {
   Route.get(`crawler/news`, 'CrawlerController.news');
-  Route.get(`crawler/screenshot`, 'CrawlerController.screenshot');
-  Route.get(`crawler/guazi`, 'CrawlerController.guazi');
   Route.get(`crawler/kms`, 'CrawlerController.kms');
-  Route.get(`crawler/taobao`, 'CrawlerController.taobao');
+  Route.get(`crawler/guazi`, 'CrawlerController.guazi');
   Route.get(`crawler/douban`, 'CrawlerController.douban');
   Route.get(`crawler/bing`, 'CrawlerController.bing');
 
