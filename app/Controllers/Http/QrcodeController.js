@@ -3,11 +3,10 @@
 const QRCode = use('qrcode');
 
 class QrcodeController {
-  async index({ request, response }) {
+  async index({ request, view }) {
     const text = request.input('text');
-    const type = request.input('type');
     const result = await QRCode.toDataURL(text);
-    return result;
+    return view.render('qrcode', { image: result });
   }
 }
 
