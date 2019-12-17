@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 module.exports = {
   /*
@@ -135,10 +135,10 @@ module.exports = {
     methods: ['POST', 'PUT', 'DELETE'],
     filterUris: ['/api/(.*)'],
     cookieOptions: {
-      httpOnly: false,
+      httpOnly: true,
       sameSite: true,
       path: '/',
       maxAge: 7200
     }
   }
-}
+};
