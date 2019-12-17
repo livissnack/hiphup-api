@@ -43,12 +43,12 @@ git push
 
 ### API 列表
 
-| Id  |          Url           |             Name             | Status |
-| :-- | :--------------------: | :--------------------------: | -----: |
-| 1   |   /v1.0/crawler/news   |           聚合新闻           | active |
-| 2   | /v1.0/crawler/soft_kms | W10 和 office 激活服务器地址 | active |
-| 3   |  /v1.0/crawler/guazi   |            瓜子网            | active |
-| 3   |  /v1.0/crawler/douban  |           豆瓣电影           | active |
+| Id  |         Url          |             Name             | Status |
+| :-- | :------------------: | :--------------------------: | -----: |
+| 1   |  /v1.0/crawler/news  |           聚合新闻           | active |
+| 2   |  /v1.0/crawler/kms   | W10 和 office 激活服务器地址 | active |
+| 3   | /v1.0/crawler/guazi  |            瓜子网            | active |
+| 3   | /v1.0/crawler/douban |           豆瓣电影           | active |
 
 ### API 接口
 
@@ -61,6 +61,7 @@ git push
 - 腾讯: tencent
 - 雅虎: yahoo
 - 美联社: apnews
+- 蕲春政府: qichun
 - 默认: baidu
 
 ##### Request
