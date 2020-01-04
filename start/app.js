@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +20,7 @@ const providers = [
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/auth/providers/AuthProvider',
   'adonis-scheduler/providers/SchedulerProvider'
-]
+];
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ const aceProviders = [
   '@adonisjs/lucid/providers/MigrationsProvider',
   '@adonisjs/vow/providers/VowProvider',
   'adonis-scheduler/providers/CommandsProvider'
-]
+];
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ const aceProviders = [
 */
 const aliases = {
   Scheduler: 'Adonis/Addons/Scheduler'
-}
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +61,6 @@ const aliases = {
 | Here you store ace commands for your package
 |
 */
-const commands = []
+const commands = [];
 
-module.exports = { providers, aceProviders, aliases, commands }
+module.exports = { providers, aceProviders, aliases, commands };
