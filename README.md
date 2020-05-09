@@ -8,7 +8,6 @@
 # Hiphup-api 项目
 
 这是一个构建于 AdonisJs 上的接口项目，主要用于日常工作中的开发测试！
-This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
 
 1. 将.env 文件中的变量全部配置在 Config Vars 里面
 2. 注意需要添加一个 ENV_SILENT=true 的变量，用于屏蔽.env 文件报错
