@@ -1,14 +1,37 @@
 const dayjs = require('dayjs');
 const axios = require('axios');
+const crypto = require('crypto');
 
 module.exports = {
-  async httpGet(url, params) {
+  async httpGet(url, params, headers = {}) {
     return axios({
       method: 'get',
       url: url,
-      data: params,
-      headers: { key: 'foobar' }
+      params: params,
+      headers: headers
     });
+  },
+
+  async httpPost(url, data, headers = {}) {
+    return axios({
+      method: 'post',
+      url: url,
+      params: data,
+      headers: headers
+    });
+  },
+
+  md5(str) {
+    const hash = crypto.createHash('md5') 
+    hash.update(str)
+    const md5Password = hash.digest('hex')
+    return md5Password;
+  },
+
+  timestamp() {
+    let tmp = Date.parse( new Date() ).toString();
+    tmp = tmp.substr(0,10);
+    return tmp;
   },
 
   numToStr(num) {

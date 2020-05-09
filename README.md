@@ -45,10 +45,15 @@ git push
 
 | Id  |         Url          |             Name             | Status |
 | :-- | :------------------: | :--------------------------: | -----: |
-| 1   |  /v1.0/crawler/news  |           聚合新闻           | active |
-| 2   |  /v1.0/crawler/kms   | W10 和 office 激活服务器地址 | active |
-| 3   | /v1.0/crawler/guazi  |            瓜子网            | active |
-| 3   | /v1.0/crawler/douban |           豆瓣电影           | active |
+| 1   | /v1.0/crawler/news   |           聚合新闻            | active |
+| 2   | /v1.0/crawler/kms    | W10 和 office 激活服务器地址   | active |
+| 3   | /v1.0/crawler/guazi  |            瓜子网             | active |
+| 4   | /v1.0/crawler/douban |           豆瓣电影             | active |
+| 5   | /v1.0/crawler/douyu  |           斗鱼直播源           | active |
+| 6   | /v1.0/crawler/huya   |           虎牙直播源           | active |
+| 7   | /v1.0/crawler/huomao |           火猫直播源           | active |
+| 8   | /v1.0/crawler/huajiao|           花椒直播源           | active |
+| 9   | /v1.0/crawler/zhanqi |           战旗直播源           | active |
 
 ### API 接口
 
@@ -238,6 +243,156 @@ slmgr /ato
       "src": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2570906505.webp"
     }
   ],
+  "message": "ok"
+}
+```
+
+#### 5、抓取斗鱼直播源
+
+- 说明：斗鱼直播流地址抓取(需要房间号roomid)
+
+##### Request
+
+- Method: **GET**
+- URL:
+  - crawler url: [/api/v1.0/crawler/douyu](https://hiphup-api.herokuapp.com/api/v1.0/crawler/douyu?roomid=667879)
+- Headers：
+- Body:
+
+```
+
+```
+
+##### Response
+
+- Body
+
+```json
+{
+  "code": 200,
+  "data": {
+    "live_url": "http://tx2play1.douyucdn.cn/live/1863767rkpl_2000p.m3u8"
+  },
+  "message": "ok"
+}
+```
+
+#### 6、抓取虎牙直播源
+
+- 说明：虎牙直播流地址抓取(需要房间号roomid)
+
+##### Request
+
+- Method: **GET**
+- URL:
+  - crawler url: [/api/v1.0/crawler/huya](https://hiphup-api.herokuapp.com/api/v1.0/crawler/huya)
+- Headers：
+- Body:
+
+```
+
+```
+
+##### Response
+
+- Body
+
+```json
+{
+  "code": 200,
+  "data": {
+    "live_url": "https://aldirect.rtmp.huya.com/src/1259515661837-1259515661837-4682562792811659264-2519031447130-10057-A-0-1_8000.m3u8"
+  },
+  "message": "ok"
+}
+```
+
+#### 7、抓取火猫直播源
+
+- 说明：火猫直播流地址抓取(需要房间号roomid)
+
+##### Request
+
+- Method: **GET**
+- URL:
+  - crawler url: [/api/v1.0/crawler/huomao](https://hiphup-api.herokuapp.com/api/v1.0/crawler/huomao)
+- Headers：
+- Body:
+
+```
+
+```
+
+##### Response
+
+- Body
+
+```json
+{
+  "code": 200,
+  "data": {
+    "live_url": "http://live-tx-hls.huomaotv.cn/live/6cdwFL24526_480.m3u8?t=1589018569&r=491569477134&stream=6cdwFL24526&rid=oubvc2y3v&token=72fe67dd4ed93f07b18e713774216311&url=http%3A%2F%2Flive-tx-hls.huomaotv.cn%2Flive%2F6cdwFL24526_480.m3u8&from=huomaoh5room"
+  },
+  "message": "ok"
+}
+```
+
+#### 8、抓取花椒直播源
+
+- 说明：花椒直播流地址抓取(需要房间号roomid)
+
+##### Request
+
+- Method: **GET**
+- URL:
+  - crawler url: [/api/v1.0/crawler/huajiao](https://hiphup-api.herokuapp.com/api/v1.0/crawler/huajiao)
+- Headers：
+- Body:
+
+```
+
+```
+
+##### Response
+
+- Body
+
+```json
+{
+  "code": 200,
+  "data": {
+    "live_url": "http://al2-hls.live.huajiao.com/live_huajiao_v2/_LC_AL2_non_21446230115890043261088281_SX/index.m3u8"
+  },
+  "message": "ok"
+}
+```
+
+#### 9、抓取战旗直播源
+
+- 说明：战旗直播流地址抓取(需要房间号roomid)
+
+##### Request
+
+- Method: **GET**
+- URL:
+  - crawler url: [/api/v1.0/crawler/zhanqi](https://hiphup-api.herokuapp.com/api/v1.0/crawler/zhanqi)
+- Headers：
+- Body:
+
+```
+
+```
+
+##### Response
+
+- Body
+
+```json
+{
+  "code": 200,
+  "data": {
+    "live_url": "https://dlhdl-cdn.zhanqi.tv/zqlive/282636_QUZqw.flv"
+  },
   "message": "ok"
 }
 ```

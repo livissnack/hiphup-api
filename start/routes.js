@@ -35,4 +35,10 @@ Route.group(() => {
   Route.get('short_url', 'ShortUrlController.create');
   Route.post('short_url', 'ShortUrlController.store');
   Route.get('short_url/:flake_id', 'ShortUrlController.redirect');
+
+  Route.get('crawler/douyu', 'LiveController.douyu');
+  Route.get('crawler/huya', 'LiveController.huya');
+  Route.get('crawler/huomao', 'LiveController.huomao');
+  Route.get('crawler/huajiao', 'LiveController.huajiao');
+  Route.get('crawler/zhanqi', 'LiveController.zhanqi');
 }).prefix(`api/${ApiVersion}`);
