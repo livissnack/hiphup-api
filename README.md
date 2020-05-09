@@ -128,7 +128,7 @@ slmgr /ato
 
 - Method: **GET**
 - URL:
-  - crawler url: [/api/v1.0/crawler/soft_kms](https://hiphup-api.herokuapp.com/api/v1.0/crawler/soft_kms)
+  - crawler url: [/api/v1.0/crawler/kms](https://hiphup-api.herokuapp.com/api/v1.0/crawler/kms)
 - Headers：
 - Body:
 
