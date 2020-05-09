@@ -254,7 +254,7 @@ slmgr /ato
 
 - Method: **GET**
 - URL:
-  - crawler url: [/api/v1.0/crawler/douyu](https://hiphup-api.herokuapp.com/api/v1.0/crawler/douyu?roomid=667879)
+  - crawler url: [/api/v1.0/crawler/douyu](https://hiphup-api.herokuapp.com/api/v1.0/crawler/douyu)
 - Headers：
 - Body:
 
