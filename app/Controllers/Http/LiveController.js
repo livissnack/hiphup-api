@@ -81,6 +81,15 @@ class LiveController {
     let live_url = `https://dlhdl-cdn.zhanqi.tv/zqlive/${data.data.videoId}.flv`;
     return response.json({code: 200, message: 'ok', data: { live_url: live_url }});
   }
+
+  async yy({ request, response }) {
+    const roomid = request.input('roomid', 16777217);
+    const { data } = await httpGet(`http://interface.yy.com/hls/new/get/${roomid}/${roomid}/1200?source=wapyy&callback=jsonp3`);
+    if(data.code !== 0) {
+      return response.json({code: 500, message: 'no'});
+    }
+    return response.json({code: 200, message: 'ok', data: data})
+  }
 }
 
 module.exports = LiveController

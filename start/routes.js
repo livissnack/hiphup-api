@@ -41,4 +41,5 @@ Route.group(() => {
   Route.get('crawler/huomao', 'LiveController.huomao');
   Route.get('crawler/huajiao', 'LiveController.huajiao');
   Route.get('crawler/zhanqi', 'LiveController.zhanqi');
+  Route.get('crawler/yy', 'LiveController.yy');
 }).prefix(`api/${ApiVersion}`);
