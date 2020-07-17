@@ -20,19 +20,14 @@ class LiveController {
   }
 
   async huya({ request, response }) {
-    const roomid = request.input('roomid', 688);
+    const roomid = request.input('roomid', 660000);
     const { data } = await httpGet(`https://m.huya.com/${roomid}`, {}, {
       'Content-Type': 'application/x-www-form-urlencoded',
       'User-Agent': 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Mobile Safari/537.36'
     })
-    const url = /[-\w:/.]+\.m3u8/.exec(data);
-    let live_url = '';
-    if(url[0].indexOf('hls') !== -1) {
-      live_url = url[0];
-    } else {
-      let url_arr = url[0].split('/');
-      live_url = `https://aldirect.rtmp.huya.com/src/${url_arr[5].replace('2500', '8000')}.m3u8`
-    }
+    const url = /liveLineUrl = "(.*)"/.exec(data);
+    // const url = /[-\w:/.]+\.m3u8/.exec(data);
+    let live_url = `https:${url[1]}`;
     if(_.isString(live_url)) {
       return response.json({code: 200, message: 'ok', data: { live_url: live_url }});
     }
@@ -89,6 +84,24 @@ class LiveController {
       return response.json({code: 500, message: 'no'});
     }
     return response.json({code: 200, message: 'ok', data: data})
+  }
+
+  async bilibili({ request, response }) {
+    const roomid = request.input('roomid', 22190208);
+    const platform = request.input('platform', 'h5');
+    if(!['h5', 'flash', 'web'].includes(platform)) {
+      return response.json({code: 500, message: 'platform not support'});
+    }
+    const { data } = await httpGet(`https://api.live.bilibili.com/xlive/web-room/v1/index/getRoomPlayInfo?room_id=${roomid}&play_url=1&mask=1&qn=4&platform=${platform}`, {}, {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.89 Safari/537.36',
+      'Accept': '*/*',
+      'Accept-Encoding': 'gzip, deflate',
+      'Auto-Unzip': true
+    })
+    if(data.code !== 0) {
+      return response.json({code: 500, message: 'no'});
+    }
+    return response.json({code: 200, message: 'ok', data: { live_url: data.data.play_url.durl[0].url }})
   }
 }
 

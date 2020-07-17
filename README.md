@@ -48,11 +48,12 @@ git push
 | 2   | /v1.0/crawler/kms    | W10 和 office 激活服务器地址   | active |
 | 3   | /v1.0/crawler/guazi  |            瓜子网             | active |
 | 4   | /v1.0/crawler/douban |           豆瓣电影             | active |
-| 5   | /v1.0/crawler/douyu  |           斗鱼直播源           | active |
-| 6   | /v1.0/crawler/huya   |           虎牙直播源           | active |
-| 7   | /v1.0/crawler/huomao |           火猫直播源           | active |
-| 8   | /v1.0/crawler/huajiao|           花椒直播源           | active |
-| 9   | /v1.0/crawler/zhanqi |           战旗直播源           | active |
+| 5   | /v1.0/live/douyu     |           斗鱼直播源           | active |
+| 6   | /v1.0/live/huya      |           虎牙直播源           | active |
+| 7   | /v1.0/live/huomao    |           火猫直播源           | active |
+| 8   | /v1.0/live/huajiao   |           花椒直播源           | active |
+| 9   | /v1.0/live/zhanqi    |           战旗直播源           | active |
+| 10  | /v1.0/live/bilibili  |           B站直播源            | active |
 
 ### API 接口
 
@@ -254,7 +255,7 @@ slmgr /ato
 
 - Method: **GET**
 - URL:
-  - crawler url: [/api/v1.0/crawler/douyu](https://hiphup-api.herokuapp.com/api/v1.0/crawler/douyu)
+  - crawler url: [/api/v1.0/live/douyu](https://hiphup-api.herokuapp.com/api/v1.0/live/douyu)
 - Headers：
 - Body:
 
@@ -284,7 +285,7 @@ slmgr /ato
 
 - Method: **GET**
 - URL:
-  - crawler url: [/api/v1.0/crawler/huya](https://hiphup-api.herokuapp.com/api/v1.0/crawler/huya)
+  - crawler url: [/api/v1.0/live/huya](https://hiphup-api.herokuapp.com/api/v1.0/live/huya)
 - Headers：
 - Body:
 
@@ -314,7 +315,7 @@ slmgr /ato
 
 - Method: **GET**
 - URL:
-  - crawler url: [/api/v1.0/crawler/huomao](https://hiphup-api.herokuapp.com/api/v1.0/crawler/huomao)
+  - crawler url: [/api/v1.0/live/huomao](https://hiphup-api.herokuapp.com/api/v1.0/live/huomao)
 - Headers：
 - Body:
 
@@ -344,7 +345,7 @@ slmgr /ato
 
 - Method: **GET**
 - URL:
-  - crawler url: [/api/v1.0/crawler/huajiao](https://hiphup-api.herokuapp.com/api/v1.0/crawler/huajiao)
+  - crawler url: [/api/v1.0/live/huajiao](https://hiphup-api.herokuapp.com/api/v1.0/live/huajiao)
 - Headers：
 - Body:
 
@@ -374,7 +375,37 @@ slmgr /ato
 
 - Method: **GET**
 - URL:
-  - crawler url: [/api/v1.0/crawler/zhanqi](https://hiphup-api.herokuapp.com/api/v1.0/crawler/zhanqi)
+  - crawler url: [/api/v1.0/live/zhanqi](https://hiphup-api.herokuapp.com/api/v1.0/live/zhanqi)
+- Headers：
+- Body:
+
+```
+
+```
+
+##### Response
+
+- Body
+
+```json
+{
+  "code": 200,
+  "data": {
+    "live_url": "https://dlhdl-cdn.zhanqi.tv/zqlive/282636_QUZqw.flv"
+  },
+  "message": "ok"
+}
+```
+
+#### 10、抓取B站直播源
+
+- 说明：B站直播流地址抓取(需要房间号roomid)
+
+##### Request
+
+- Method: **GET**
+- URL:
+  - crawler url: [/api/v1.0/live/bilibili](https://hiphup-api.herokuapp.com/api/v1.0/live/bilibili)
 - Headers：
 - Body:
 

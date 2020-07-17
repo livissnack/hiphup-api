@@ -36,10 +36,11 @@ Route.group(() => {
   Route.post('short_url', 'ShortUrlController.store');
   Route.get('short_url/:flake_id', 'ShortUrlController.redirect');
 
-  Route.get('crawler/douyu', 'LiveController.douyu');
-  Route.get('crawler/huya', 'LiveController.huya');
-  Route.get('crawler/huomao', 'LiveController.huomao');
-  Route.get('crawler/huajiao', 'LiveController.huajiao');
-  Route.get('crawler/zhanqi', 'LiveController.zhanqi');
-  Route.get('crawler/yy', 'LiveController.yy');
+  Route.get('live/douyu', 'LiveController.douyu');
+  Route.get('live/huya', 'LiveController.huya');
+  Route.get('live/huomao', 'LiveController.huomao');
+  Route.get('live/huajiao', 'LiveController.huajiao');
+  Route.get('live/zhanqi', 'LiveController.zhanqi');
+  Route.get('live/yy', 'LiveController.yy');
+  Route.get('live/bilibili', 'LiveController.bilibili');
 }).prefix(`api/${ApiVersion}`);
