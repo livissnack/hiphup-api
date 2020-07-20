@@ -93,5 +93,19 @@ module.exports = {
       result += chars[Math.floor(Math.random() * chars.length)];
     }
     return result;
+  },
+
+  sha256(str) {
+    return crypto.createHash('sha256').update(str).digest('hex');
+  },
+
+  cur_time() {
+    return Math.round((new Date).getTime()/1000);
+  },
+
+  truncate(q){
+    let len = q.length;
+    if(len <= 20) return q;
+    return q.substring(0, 10) + len + q.substring(len-10, len);
   }
 };
