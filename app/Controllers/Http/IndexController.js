@@ -1,9 +1,7 @@
-'use strict'
+'use strict';
 
 class IndexController {
-  async index({ request, response }) {
-    
-  }
+  async index({ request, response }) {}
 }
 
-module.exports = IndexController
+module.exports = IndexController;

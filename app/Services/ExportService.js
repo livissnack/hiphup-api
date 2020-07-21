@@ -13,26 +13,26 @@ class ExportService {
 
     let strArr = [];
     let numArr = generateNumArrByNum(data.headers.length);
-    numArr.forEach(item => {
+    numArr.forEach((item) => {
       strArr.push(numToStr(item) + 1);
     });
 
-    strArr.forEach(cell => {
+    strArr.forEach((cell) => {
       worksheet.getCell(cell).fill = {
         type: 'pattern',
         pattern: 'solid',
         fgColor: {
-          argb: 'FFCCFFCC'
+          argb: 'FFCCFFCC',
         },
         bgColor: {
-          argb: 'FFCCFFCC'
-        }
+          argb: 'FFCCFFCC',
+        },
       };
       worksheet.getCell(cell).font = {
         name: 'Comic Sans MS',
         family: 4,
         color: { argb: 'FF00FF00' },
-        bold: true
+        bold: true,
       };
     });
 

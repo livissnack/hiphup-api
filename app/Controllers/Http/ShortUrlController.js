@@ -5,10 +5,10 @@ const { random_str } = require('../../Tools/helper');
 
 class ShortUrlController {
   async create() {
-    const flakeId = randomString(8, {
+    const flakeId = random_str(8, {
       letters: true,
       numbers: true,
-      specials: false
+      specials: false,
     });
     return flakeId;
   }

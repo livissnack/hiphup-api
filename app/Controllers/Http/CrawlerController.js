@@ -19,7 +19,7 @@ class CrawlerController {
         ['yahoo', 'https://www.yahoo.com/news'],
         ['apnews', 'https://www.apnews.com'],
         ['qichun', 'http://www.qichun.gov.cn/'],
-        ['default', 'http://news.baidu.com']
+        ['default', 'http://news.baidu.com'],
       ]);
 
       const gotoUrl = urlMap.get(type);
@@ -33,8 +33,8 @@ class CrawlerController {
           '–disable-dev-shm-usage',
           '–no-first-run',
           '–no-zygote',
-          '–single-process'
-        ]
+          '–single-process',
+        ],
       });
       const page = await browser.newPage();
 
@@ -44,14 +44,14 @@ class CrawlerController {
       switch (type) {
         case 'baidu':
           const BAIDU_SELECTED = '.hotnews ul li strong a';
-          list = await page.evaluate(BAIDU_SELECTED => {
+          list = await page.evaluate((BAIDU_SELECTED) => {
             let elements = Array.from(
               document.querySelectorAll(BAIDU_SELECTED)
             );
-            let texts = elements.map(a => {
+            let texts = elements.map((a) => {
               return {
                 url: a.href.trim(),
-                title: a.innerText
+                title: a.innerText,
               };
             });
             return texts;
@@ -60,14 +60,14 @@ class CrawlerController {
 
         case 'toutiao':
           const TOUTIAO_SELECTED = 'feed-infinite-wrapper ul li a';
-          list = await page.evaluate(TOUTIAO_SELECTED => {
+          list = await page.evaluate((TOUTIAO_SELECTED) => {
             let elements = Array.from(
               document.querySelectorAll(TOUTIAO_SELECTED)
             );
-            let texts = elements.map(a => {
+            let texts = elements.map((a) => {
               return {
                 url: a.href.trim(),
-                title: a.innerText
+                title: a.innerText,
               };
             });
             return texts;
@@ -76,14 +76,14 @@ class CrawlerController {
 
         case 'tencent':
           const TENCENT_SELECTED = '.list li .detail h3 a';
-          list = await page.evaluate(TENCENT_SELECTED => {
+          list = await page.evaluate((TENCENT_SELECTED) => {
             let elements = Array.from(
               document.querySelectorAll(TENCENT_SELECTED)
             );
-            let texts = elements.map(a => {
+            let texts = elements.map((a) => {
               return {
                 url: a.href.trim(),
-                title: a.innerText
+                title: a.innerText,
               };
             });
             return texts;
@@ -92,14 +92,14 @@ class CrawlerController {
 
         case 'yahoo':
           const YAHOO_SELECTED = '#YDC-Stream ul li h3 a';
-          list = await page.evaluate(YAHOO_SELECTED => {
+          list = await page.evaluate((YAHOO_SELECTED) => {
             let elements = Array.from(
               document.querySelectorAll(YAHOO_SELECTED)
             );
-            let texts = elements.map(a => {
+            let texts = elements.map((a) => {
               return {
                 url: a.href.trim(),
-                title: a.innerText
+                title: a.innerText,
               };
             });
             return texts;
@@ -108,14 +108,14 @@ class CrawlerController {
 
         case 'apnews':
           const APNEWS_SELECTED = '.cards FeedCard Component-headline-0-2-29';
-          list = await page.evaluate(APNEWS_SELECTED => {
+          list = await page.evaluate((APNEWS_SELECTED) => {
             let elements = Array.from(
               document.querySelectorAll(APNEWS_SELECTED)
             );
-            let texts = elements.map(a => {
+            let texts = elements.map((a) => {
               return {
                 url: a.href.trim(),
-                title: a.innerText
+                title: a.innerText,
               };
             });
             return texts;
@@ -124,14 +124,14 @@ class CrawlerController {
 
         case 'qichun':
           const QICHUN_SELECTED = '.xwlist ul li a';
-          list = await page.evaluate(QICHUN_SELECTED => {
+          list = await page.evaluate((QICHUN_SELECTED) => {
             let elements = Array.from(
               document.querySelectorAll(QICHUN_SELECTED)
             );
-            let texts = elements.map(a => {
+            let texts = elements.map((a) => {
               return {
                 url: a.href.trim(),
-                title: a.innerText
+                title: a.innerText,
               };
             });
             return texts;
@@ -165,8 +165,8 @@ class CrawlerController {
           '–disable-dev-shm-usage',
           '–no-first-run',
           '–no-zygote',
-          '–single-process'
-        ]
+          '–single-process',
+        ],
       });
       const page = await browser.newPage();
 
@@ -175,9 +175,9 @@ class CrawlerController {
       );
 
       const sel = '#file-kms-md-readme article ul li';
-      const kmsList = await page.evaluate(sel => {
+      const kmsList = await page.evaluate((sel) => {
         let elements = Array.from(document.querySelectorAll(sel));
-        let texts = elements.map(element => {
+        let texts = elements.map((element) => {
           return element.innerText;
         });
         return texts;
@@ -205,8 +205,8 @@ class CrawlerController {
           '–disable-dev-shm-usage',
           '–no-first-run',
           '–no-zygote',
-          '–single-process'
-        ]
+          '–single-process',
+        ],
       });
       const page = await browser.newPage();
 
@@ -214,9 +214,9 @@ class CrawlerController {
 
       const BRANDS_INFO_SELECTOR =
         '.dd-all.clearfix.js-brand.js-option-hid-info';
-      const brands = await page.evaluate(sel => {
+      const brands = await page.evaluate((sel) => {
         const ulList = Array.from($(sel).find('ul li p a'));
-        const ctn = ulList.map(v => {
+        const ctn = ulList.map((v) => {
           return v.innerText.replace(/\s/g, '');
         });
         return ctn;
@@ -244,8 +244,8 @@ class CrawlerController {
         '–disable-dev-shm-usage',
         '–no-first-run',
         '–no-zygote',
-        '–single-process'
-      ]
+        '–single-process',
+      ],
     });
     const page = await browser.newPage();
     await page.goto('https://movie.douban.com/cinema/nowplaying/beijing/');
@@ -255,10 +255,10 @@ class CrawlerController {
       );
       const links = [];
       if (items.length >= 1) {
-        items.forEach(item => {
+        items.forEach((item) => {
           const data = Array.from(item.attributes);
           const link = {};
-          data.forEach(v => {
+          data.forEach((v) => {
             link[v.nodeName] = v.value;
           });
           const a = item.querySelector('.poster > a');
@@ -266,7 +266,7 @@ class CrawlerController {
           link.href = a.getAttribute('href');
           link.src = img.getAttribute('src');
           links.push({
-            ...link
+            ...link,
           });
         });
       }
@@ -291,8 +291,8 @@ class CrawlerController {
           '–disable-dev-shm-usage',
           '–no-first-run',
           '–no-zygote',
-          '–single-process'
-        ]
+          '–single-process',
+        ],
       });
       const page = await browser.newPage();
       const url = `https://cn.bing.com`;
@@ -301,7 +301,7 @@ class CrawlerController {
 
       const sel = '#bgImgProgLoad';
 
-      const res = await page.$eval(sel, e => {
+      const res = await page.$eval(sel, (e) => {
         return e.getAttribute('data-ultra-definition-src');
       });
       browser.close();
