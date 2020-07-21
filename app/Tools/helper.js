@@ -3,34 +3,34 @@ const axios = require('axios');
 const crypto = require('crypto');
 
 module.exports = {
-  async httpGet(url, params, headers = {}) {
+  async http_get(url, params, headers = {}) {
     return axios({
       method: 'get',
       url: url,
       params: params,
-      headers: headers
+      headers: headers,
     });
   },
 
-  async httpPost(url, data, headers = {}) {
+  async http_post(url, data, headers = {}) {
     return axios({
       method: 'post',
       url: url,
       params: data,
-      headers: headers
+      headers: headers,
     });
   },
 
   md5(str) {
-    const hash = crypto.createHash('md5') 
-    hash.update(str)
-    const md5Password = hash.digest('hex')
+    const hash = crypto.createHash('md5');
+    hash.update(str);
+    const md5Password = hash.digest('hex');
     return md5Password;
   },
 
   timestamp() {
-    let tmp = Date.parse( new Date() ).toString();
-    tmp = tmp.substr(0,10);
+    let tmp = Date.parse(new Date()).toString();
+    tmp = tmp.substr(0, 10);
     return tmp;
   },
 
@@ -61,7 +61,7 @@ module.exports = {
    * @param {number} length
    * @param {object} options {specials: ':;', numbers: false, letters: 'ABCDEFG'}
    */
-  randomString(length = 8, options = {}) {
+  random_str(length = 8, options = {}) {
     let numbers = '0123456789';
     let letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     let specials = '~!@#$%^*()_+-=[]{}|;:,./<>?';
@@ -100,12 +100,69 @@ module.exports = {
   },
 
   cur_time() {
-    return Math.round((new Date).getTime()/1000);
+    return Math.round(new Date().getTime() / 1000);
   },
 
-  truncate(q){
+  truncate(q) {
     let len = q.length;
-    if(len <= 20) return q;
-    return q.substring(0, 10) + len + q.substring(len-10, len);
-  }
+    if (len <= 20) return q;
+    return q.substring(0, 10) + len + q.substring(len - 10, len);
+  },
+
+  is_string(str) {
+    return typeof str === 'string';
+  },
+
+  is_number(num) {
+    return typeof num === 'number';
+  },
+
+  is_empty(obj) {
+    if (obj == null || obj == undefined) {
+      return true;
+    }
+
+    if (typeof obj === 'number') {
+      if (isNaN(obj)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    if (
+      typeof obj === 'boolean' ||
+      typeof obj === 'function' ||
+      obj instanceof Date ||
+      obj instanceof RegExp
+    ) {
+      return false;
+    }
+
+    if (typeof obj === 'string') {
+      if (obj.trim().length == 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    if (typeof obj === 'object') {
+      if (obj instanceof Array) {
+        if (obj.length == 0) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+      if (obj instanceof Object) {
+        if (Object.getOwnPropertyNames(obj).length == 0) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+  },
 };

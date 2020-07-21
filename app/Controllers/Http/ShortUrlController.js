@@ -1,7 +1,7 @@
 'use strict';
 
 const ShortUrl = use('App/Models/ShortUrl');
-const { randomString } = require('../../Tools/helper');
+const { random_str } = require('../../Tools/helper');
 
 class ShortUrlController {
   async create() {

@@ -1,6 +1,4 @@
 'use strict'
-const Env = use('Env')
-const sha256 = use('js-sha256')
 const {httpPost} = require('../../Tools/helper')
 
 class TranslateController {

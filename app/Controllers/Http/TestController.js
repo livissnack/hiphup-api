@@ -1,6 +1,5 @@
 'use strict';
 
-const _ = use('lodash');
 const { randomString } = require('../../Tools/helper');
 
 class TestController {
