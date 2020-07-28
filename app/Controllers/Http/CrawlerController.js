@@ -314,7 +314,10 @@ class CrawlerController {
   }
 
   async jiameixian({ request, response }) {
-    const url = request.input('url', 'https://mp.weixin.qq.com/s/OfRfdm13-CsR8Ey7g7JCVQ');
+    const url = request.input(
+      'url',
+      'https://mp.weixin.qq.com/s/OfRfdm13-CsR8Ey7g7JCVQ'
+    );
     try {
       const browser = await puppeteer.launch({
         headless: true,
@@ -333,22 +336,25 @@ class CrawlerController {
 
       await page.goto(url);
 
-      const WEIXIN_SELECTED = '#js_content > table > tbody > tr > td > p > span';
+      const WEIXIN_SELECTED =
+        '#js_content > table > tbody > tr > td > p > span';
 
       const result = await page.evaluate((WEIXIN_SELECTED) => {
-        let elements = Array.from(
-          document.querySelectorAll(WEIXIN_SELECTED)
-        );
+        let elements = Array.from(document.querySelectorAll(WEIXIN_SELECTED));
         let texts = elements.map((span) => {
           return {
-            title: span.innerText
+            title: span.innerText,
           };
         });
         return texts;
       }, WEIXIN_SELECTED);
 
       browser.close();
-      return response.json({ code: 200, data: egg_combine_jiameixian(result), message: 'ok' });
+      return response.json({
+        code: 200,
+        data: egg_combine_jiameixian(result),
+        message: 'ok',
+      });
     } catch (error) {
       return response.json({ code: 500, message: error.toString() });
     }
