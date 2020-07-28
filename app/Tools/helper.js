@@ -165,4 +165,14 @@ module.exports = {
       }
     }
   },
+
+  egg_combine_jiameixian(data) {
+    data.splice(8, 0, {title: '以质论价'});
+    data.splice(9, 0, {title: '以质论价'});
+    return this.group_arr(data, 5);
+  },
+
+  group_arr(data, num) {
+    return Array.from(Array(Math.ceil(data.length / num))).map((_, i) => data.slice(i * num, (i + 1) * num));
+  }
 };
