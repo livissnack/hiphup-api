@@ -161,6 +161,34 @@ class LiveController {
       data: { live_url: data.data.play_url.durl[0].url },
     });
   }
+
+  async douyin({ request, response }) {
+    const roomid = request.input('roomid', '6854736674899888909');
+    const { data } = await http_get(
+      `https://webcast-hl.amemv.com/webcast/room/reflow/info/?room_id=${roomid}&live_id=1`,
+      {},
+      {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.89 Safari/537.36',
+        Accept: '*/*',
+        'Accept-Encoding': 'gzip, deflate',
+        'Auto-Unzip': true,
+      }
+    );
+    if (data.status_code !== 0) {
+      return response.json({ code: 500, message: 'no' });
+    }
+
+    if ('stream_url' in data.data.room) {
+      return response.json({
+        code: 200,
+        message: 'ok',
+        data: data.data.room.stream_url.hls_pull_url,
+      });
+    }
+
+    return response.json({ code: 200, message: 'no start play' });
+  }
 }
 
 module.exports = LiveController;
