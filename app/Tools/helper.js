@@ -169,7 +169,7 @@ module.exports = {
   egg_combine_jiameixian(data) {
     data.splice(8, 0, {title: '以质论价'});
     data.splice(9, 0, {title: '以质论价'});
-    return this.group_arr(data, 5);
+    return data;
   },
 
   group_arr(data, num) {

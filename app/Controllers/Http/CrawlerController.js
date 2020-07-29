@@ -1,7 +1,7 @@
 'use strict';
 
 const puppeteer = use('puppeteer');
-const { egg_combine_jiameixian } = require('../../Tools/helper');
+const { egg_combine_jiameixian, group_arr } = require('../../Tools/helper');
 
 class CrawlerController {
   /**
@@ -349,10 +349,12 @@ class CrawlerController {
         return texts;
       }, WEIXIN_SELECTED);
 
+      const data = egg_combine_jiameixian(result);
+
       browser.close();
       return response.json({
         code: 200,
-        data: egg_combine_jiameixian(result),
+        data: group_arr(data, 5),
         message: 'ok',
       });
     } catch (error) {
