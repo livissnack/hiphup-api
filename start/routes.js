@@ -17,7 +17,7 @@
 const ApiVersion = 'v1.0';
 const Route = use('Route');
 
-Route.on('/').render('welcome');
+Route.get('/', 'IndexController.index');
 
 Route.get('test', 'TestController.index');
 Route.get('qrcode', 'QrcodeController.index');
