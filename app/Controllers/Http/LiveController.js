@@ -44,7 +44,7 @@ class LiveController {
     );
     const url = /liveLineUrl = "(.*)"/.exec(data);
     // const url = /[-\w:/.]+\.m3u8/.exec(data);
-    let live_url = `https:${url[1]}`;
+    let live_url = `http:${url[1]}`;
     if (is_string(live_url)) {
       return response.json({
         code: 200,
