@@ -316,7 +316,7 @@ class CrawlerController {
   async jiameixian({ request, response }) {
     const url = request.input(
       'url',
-      'https://mp.weixin.qq.com/s/OfRfdm13-CsR8Ey7g7JCVQ'
+      'https://mp.weixin.qq.com/s/rJwKZHBz9AEBqz8K3s28ZA'
     );
     try {
       const browser = await puppeteer.launch({
