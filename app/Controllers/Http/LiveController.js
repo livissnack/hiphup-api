@@ -34,6 +34,7 @@ class LiveController {
 
   async huya({ request, response }) {
     const roomid = request.input('roomid', 660000);
+    const type = request.input('type', 'all');
     const { data } = await http_get(
       `https://m.huya.com/${roomid}`,
       {},
@@ -47,8 +48,8 @@ class LiveController {
     // const url = /[-\w:/.]+\.m3u8/.exec(data);
     let live_url = `https:${url[1]}`;
     let url_params = url_helper.parse(live_url);
-    url_params.host = 'al.hls.huya.com';
-    url_params.hostname = 'al.hls.huya.com';
+    url_params.host = type === 'tv' ? 'bd.hls.huya.com' : 'al.hls.huya.com';
+    url_params.hostname = type === 'tv' ? 'bd.hls.huya.com' : 'al.hls.huya.com';
     live_url = `${url_params.protocol}//${url_params.host}${url_params.path}`;
     if (is_string(live_url)) {
       return response.json({
