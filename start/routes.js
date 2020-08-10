@@ -45,6 +45,7 @@ Route.group(() => {
   Route.get('live/yy', 'LiveController.yy');
   Route.get('live/bilibili', 'LiveController.bilibili');
   Route.get('live/douyin', 'LiveController.douyin');
+  Route.get('live/qqlive', 'LiveController.qqlive');
 
   Route.any('tran/youdao', 'TranslateController.youdao');
 }).prefix(`api/${ApiVersion}`);

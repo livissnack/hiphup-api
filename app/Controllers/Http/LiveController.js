@@ -34,7 +34,6 @@ class LiveController {
 
   async huya({ request, response }) {
     const roomid = request.input('roomid', 660000);
-    const type = request.input('type', 'all');
     const { data } = await http_get(
       `https://m.huya.com/${roomid}`,
       {},
@@ -45,11 +44,8 @@ class LiveController {
       }
     );
     const url = /liveLineUrl = "(.*)"/.exec(data);
-    // const url = /[-\w:/.]+\.m3u8/.exec(data);
     let live_url = `https:${url[1]}`;
     let url_params = url_helper.parse(live_url);
-    url_params.host = type === 'tv' ? 'bd.hls.huya.com' : 'al.hls.huya.com';
-    url_params.hostname = type === 'tv' ? 'bd.hls.huya.com' : 'al.hls.huya.com';
     live_url = `${url_params.protocol}//${url_params.host}${url_params.path}`;
     if (is_string(live_url)) {
       return response.json({
@@ -194,6 +190,17 @@ class LiveController {
     }
 
     return response.json({ code: 200, message: 'no start play' });
+  }
+
+  async qqlive({ request, response }) {
+    const roomid = request.input('roomid', 10004859)
+    const { data } = await http_get(`https://m.live.qq.com/${roomid}`, {}, {
+      'Content-Type': 'application/x-www-form-urlencoded',
+        'User-Agent':
+          'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
+    })
+    const url = data.match(/var window.$ROOM_INFO = "([-\w:/.]+?)"/)
+    return url
   }
 }
 
