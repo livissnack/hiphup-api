@@ -361,6 +361,62 @@ class CrawlerController {
       return response.json({ code: 500, message: error.toString() });
     }
   }
+
+  async fucai({ request, response }) {
+    const url = request.input(
+      'url',
+      'http://www.cwl.gov.cn'
+    );
+    try {
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '–disable-gpu',
+          '–disable-dev-shm-usage',
+          '–no-first-run',
+          '–no-zygote',
+          '–single-process',
+        ],
+      });
+
+      const page = await browser.newPage();
+
+      await page.goto(url);
+
+      const TARGET_SELECTED = '.kjGg';
+
+      const shuangseqiu = await page.evaluate((TARGET_SELECTED) => {
+        let elements1 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > .kjgg01 > .kjggL > .kjxx > em`));
+        let elements2 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > .kjgg01 > .kjggL > ul > li`));
+        let texts1 = elements1.map((em) => {
+          return {
+            title: em.innerText,
+          };
+        });
+
+        let texts2 = elements2.map((li) => {
+          return {
+            title: li.innerText,
+          };
+        });
+        return {name: texts1[0]['title'], amount: texts1[1]['title'], result: texts2};
+      }, TARGET_SELECTED);
+
+  
+      const data = {'shuangseqiu': shuangseqiu};
+
+      browser.close();
+      return response.json({
+        code: 200,
+        data: data,
+        message: 'ok',
+      });
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() });
+    }
+  }
 }
 
 module.exports = CrawlerController;
