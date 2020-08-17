@@ -5,19 +5,18 @@ const Schema = use('Schema');
 
 class ShortUrlSchema extends Schema {
   up() {
-    this.create('short_urls', (table) => {
+    this.create('short_url_logs', (table) => {
       table.increments();
-      table.string('flake_id', 40).unique().notNullable().comment('url唯一ID');
+      table.string('ip', 32).notNullable().comment('访问的ip地址');
       table
-        .string('target_url', 60)
-        .unique()
+        .text('user_agent')
         .notNullable()
-        .comment('跳转目标url');
+        .comment('请求agent信息');
       table
-        .integer('status')
+        .integer('short_url_id')
         .notNullable()
-        .defaultTo(1)
-        .comment('重定向状态0：启用，1：禁用');
+        .defaultTo(0)
+        .comment('短链ID');
       table.timestamps();
     });
   }

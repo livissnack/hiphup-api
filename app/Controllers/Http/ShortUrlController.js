@@ -1,5 +1,6 @@
 'use strict';
 
+const Event = use('Event');
 const ShortUrl = use('App/Models/ShortUrl');
 const { random_str } = require('../../Tools/helper');
 
@@ -26,10 +27,19 @@ class ShortUrlController {
     }
   }
 
-  async redirect({ params, response }) {
+  async redirect({ params, request, response }) {
     const { flake_id } = params;
+    const ip = request.ip();
+    const user_agent = request.header('User-Agent');
+
     const shortUrl = await ShortUrl.findBy('flake_id', flake_id);
     if (parseInt(shortUrl.status) === 0) {
+      let requestInfo = {
+        ip: ip,
+        user_agent: user_agent,
+        id: shortUrl.id
+      }
+      Event.fire('new::click_short_url', requestInfo);
       return response.redirect(shortUrl.target_url, false, 301);
     }
   }
