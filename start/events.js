@@ -1,5 +1,4 @@
 const Event = use('Event')
-const Mail = use('Mail')
 const ShortUrlLog = use('App/Models/ShortUrlLog');
 
 Event.on('new::click_short_url', async (requestInfo) => {
