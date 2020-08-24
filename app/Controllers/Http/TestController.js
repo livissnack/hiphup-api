@@ -1,6 +1,6 @@
 'use strict';
 
-const { random_str } = require('../../Tools/helper');
+const { random_str, two_color_ball } = require('../../Tools/helper');
 
 class TestController {
   async index() {

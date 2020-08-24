@@ -95,6 +95,36 @@ module.exports = {
     return result;
   },
 
+  two_color_ball() {
+    let red_ball = [];
+    let blue_ball = [];
+
+    red_ball = randomNums(6, 1, 33);
+    blue_ball = randomNums(1, 1, 16);
+
+    function randomNums(n, min, max) {
+      let arr = [];
+      for (i = 0; i < n; i++) {
+          let ran = Math.ceil(Math.random() * (max - min) + min);
+          while (isExist(arr, ran)) {
+              ran = Math.ceil(Math.random() * (max - min) + min);
+          }
+          arr[i] = ran < 10 ? `0${ran}` : ran.toString();
+      }
+      return arr;
+    }
+   
+    function isExist(arr, ran) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] == ran) {
+                return true;
+            }
+        }
+        return false;
+    }
+    return {red_ball: red_ball.sort(function(a, b){ return a - b }), blue_ball: blue_ball};
+  },
+
   sha256(str) {
     return crypto.createHash('sha256').update(str).digest('hex');
   },
