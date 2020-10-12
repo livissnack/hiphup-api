@@ -60,7 +60,7 @@ class CrawlerController {
           break;
 
         case 'toutiao':
-          const TOUTIAO_SELECTED = 'feed-infinite-wrapper ul li a';
+          const TOUTIAO_SELECTED = '.wcommonFeed ul li a';
           list = await page.evaluate((TOUTIAO_SELECTED) => {
             let elements = Array.from(
               document.querySelectorAll(TOUTIAO_SELECTED)
@@ -124,7 +124,7 @@ class CrawlerController {
           break;
 
         case 'qichun':
-          const QICHUN_SELECTED = '.xwlist ul li a';
+          const QICHUN_SELECTED = '.bt-tab-con ul li a';
           list = await page.evaluate((QICHUN_SELECTED) => {
             let elements = Array.from(
               document.querySelectorAll(QICHUN_SELECTED)
