@@ -417,6 +417,58 @@ class CrawlerController {
       return response.json({ code: 500, message: error.toString() });
     }
   }
+
+  async proxy({ request, response }) {
+    const url = request.input(
+      'url',
+      'http://free-proxy.cz'
+    );
+    try {
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '–disable-gpu',
+          '–disable-dev-shm-usage',
+          '–no-first-run',
+          '–no-zygote',
+          '–single-process',
+          // '--proxy-server=http://150.129.54.111:6667'
+        ],
+      });
+
+      const page = await browser.newPage();
+
+      await page.goto(url);
+
+      const TARGET_SELECTED = '#proxy_list tbody tr';
+
+      const proxy_list = await page.evaluate((TARGET_SELECTED) => {
+        let elements1 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > td`));
+        let texts1 = elements1.map((em) => {
+          let row_data = em.innerText;
+          return {
+            row_data
+          };
+        });
+
+        return {name: texts1};
+      }, TARGET_SELECTED);
+
+  
+      const data = {'proxy_list': proxy_list};
+
+      browser.close();
+      return response.json({
+        code: 200,
+        data: data,
+        message: 'ok',
+      });
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() });
+    }
+  }
 }
 
 module.exports = CrawlerController;
