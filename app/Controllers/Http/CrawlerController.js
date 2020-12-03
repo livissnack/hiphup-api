@@ -1,7 +1,7 @@
 'use strict';
 
 const puppeteer = use('puppeteer');
-const { egg_combine_jiameixian, group_arr } = require('../../Tools/helper');
+const { egg_combine_jiameixian, group_arr, is_empty } = require('../../Tools/helper');
 
 class CrawlerController {
   /**
@@ -458,6 +458,74 @@ class CrawlerController {
 
   
       const data = {'proxy_list': proxy_list};
+
+      browser.close();
+      return response.json({
+        code: 200,
+        data: data,
+        message: 'ok',
+      });
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() });
+    }
+  }
+
+  async huangli({ request, response }) {
+    const url = request.input(
+      'url',
+      'http://m.laohuangli.net/'
+    );
+    try {
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '–disable-gpu',
+          '–disable-dev-shm-usage',
+          '–no-first-run',
+          '–no-zygote',
+          '–single-process',
+        ],
+      });
+
+      const page = await browser.newPage();
+
+      await page.goto(url);
+
+      const TARGET_SELECTED = 'body';
+
+      const huangli_list = await page.evaluate((TARGET_SELECTED) => {
+        let elements1 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > .neirong_Yi_Ji`));
+        let elements2 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > .neirong_Yi_Ji2`));
+        let elements3 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > .neirong_txt2 > div`));
+        let texts1 = elements1.map((em) => {
+          let row_data = em.innerText;
+          return {
+            row_data
+          };
+        });
+
+        let texts2 = elements2.map((em) => {
+          let row_data = em.innerText;
+          return {
+            row_data
+          };
+        });
+
+        let texts3 = elements3.map((em) => {
+          let row_data = em.innerText;
+       
+          return {
+            row_data
+          };
+        });
+
+        return {texts1, texts2, texts3};
+      }, TARGET_SELECTED);
+
+  
+      const data = {huangli_list};
 
       browser.close();
       return response.json({

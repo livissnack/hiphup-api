@@ -32,6 +32,7 @@ Route.group(() => {
   Route.get(`crawler/jiameixian`, 'CrawlerController.jiameixian');
   Route.get(`crawler/fucai`, 'CrawlerController.fucai');
   Route.get(`crawler/proxy`, 'CrawlerController.proxy');
+  Route.get(`crawler/huangli`, 'CrawlerController.huangli');
 
   Route.post('import', 'ExcelController.import');
   Route.get('export', 'ExcelController.export');
