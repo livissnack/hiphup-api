@@ -54,6 +54,7 @@ git push
 | 8   | /v1.0/live/huajiao   |           花椒直播源           | active |
 | 9   | /v1.0/live/zhanqi    |           战旗直播源           | active |
 | 10  | /v1.0/live/bilibili  |           B站直播源            | active |
+| 11  | /v1.0/avoid/travel   |           头条隔离政策查询      | active |
 
 ### API 接口
 
@@ -424,6 +425,82 @@ slmgr /ato
     "live_url": "https://dlhdl-cdn.zhanqi.tv/zqlive/282636_QUZqw.flv"
   },
   "message": "ok"
+}
+```
+
+#### 11、头条隔离政策查询
+
+- 说明：请求参数需要城市code,默认出发地深圳，到达地黄石
+
+##### Request
+
+- Method: **GET**
+- URL:
+  - crawler url: [/api/v1.0/avoid/travel](https://hiphup-api.herokuapp.com/api/v1.0/avoid/travel)
+- Headers：
+- Params:
+
+```json
+{
+  "from_city_code": 440300,
+  "to_city_code": 420200
+}
+```
+
+##### Response
+
+- Body
+
+```json
+{
+    "code": 200,
+    "message": "ok",
+    "data": {
+        "from_city_covid_info": {
+            "amos_id_str": "6914922915167207438",
+            "city_block_id_str": "1688218673547277",
+            "city_code": "440300",
+            "city_name": "深圳",
+            "covid_channel_schema": "sslocal://webview?disable_bar=1&bounce_disable=1&hide_search=1&should_append_common_param=1&title=%E6%8A%97%E5%87%BB%E8%82%BA%E7%82%8E&url=https%3A%2F%2Fi.snssdk.com%2Fugc%2Fhotboard_fe%2Fhot_list%2Ftemplate%2Fhot_list%2Fforum_tab.html%3FactiveWidget%3D12%26city_code%3D440300%26city_name%3D%25E6%25B7%25B1%25E5%259C%25B3%26click_from%3Dhot_event_page%26local_tab%3D",
+            "covid_channel_url": "https://i.snssdk.com/ugc/hotboard_fe/hot_list/template/hot_list/forum_tab.html?activeWidget=12&city_code=440300&city_name=%E6%B7%B1%E5%9C%B3&click_from=hot_event_page&local_tab=",
+            "health_code": {
+                "desc": "微信扫一扫，进入小程序",
+                "gid": "https://www.toutiao.com/a6830268358680642061/",
+                "name": "粤康码",
+                "picture": "http://p1-tt.bytecdn.cn/origin/2b29b0003447c4e3a8832",
+                "style": "0"
+            },
+            "high_in_desc": "1.近14天内有高风险地区旅居史的人员，14天集中隔离医学观察，隔离期间第1、第14天核酸检测。\r\n2.近14天内有中风险地区旅居史的人员，落实社区健康管理，抵粤当日核酸检测。\r\n3.所有境外入境人员集中隔离14天， 第1、 7、 14 天各开展 1 次核酸检测，英国以及其他发现新型变异株国家的入境人员， 在1、4、7、 14 天进行核酸检测； 解除隔离后纳入7天社区管理（ 含第1入境点在外省的入境人员），并在第 7 天（ 入境第 21 天） 安排 1次核酸检测。",
+            "low_in_desc": "低风险地区人员进深圳无需持核酸阴性证明及隔离，需持健康码绿码。",
+            "out_desc": "1.出行无需核酸阴性证明，倡导非必要不出行、暂缓前往中高风险地区。\n2.教职员工和学生原则上留深过寒假、春节，非必要不离深、不出境、不前往国内疫情中高风险地区；确有必要离深的，须提前向所在学校（幼儿园）报告，并执行所在区的有关规定。",
+            "province_block_id_str": "1688554849637421",
+            "province_code": "44",
+            "province_name": "广东",
+            "risk_level": 1
+        },
+        "to_city_covid_info": {
+            "amos_id_str": "6914556459313266702",
+            "city_block_id_str": "1688219208317975",
+            "city_code": "420200",
+            "city_name": "黄石",
+            "covid_channel_schema": "sslocal://webview?disable_bar=1&bounce_disable=1&hide_search=1&should_append_common_param=1&title=%E6%8A%97%E5%87%BB%E8%82%BA%E7%82%8E&url=https%3A%2F%2Fi.snssdk.com%2Fugc%2Fhotboard_fe%2Fhot_list%2Ftemplate%2Fhot_list%2Fforum_tab.html%3FactiveWidget%3D12%26city_code%3D420200%26city_name%3D%25E9%25BB%2584%25E7%259F%25B3%26click_from%3Dhot_event_page%26local_tab%3D",
+            "covid_channel_url": "https://i.snssdk.com/ugc/hotboard_fe/hot_list/template/hot_list/forum_tab.html?activeWidget=12&city_code=420200&city_name=%E9%BB%84%E7%9F%B3&click_from=hot_event_page&local_tab=",
+            "health_code": {
+                "desc": "微信扫一扫，进入小程序",
+                "gid": "https://www.toutiao.com/a6802487497235366407/",
+                "name": "湖北健康码",
+                "picture": "http://p9.pstatp.com/origin/33a54000341a05f839b1e",
+                "style": "0"
+            },
+            "high_in_desc": "中高风险地区来鄂返鄂人员，请主动到当地社区进行申报，并配合疫情防控指挥部的核酸检测、隔离等所有防控措施。",
+            "low_in_desc": "凭健康码通行，抵鄂后需居家医学观察和健康监测，期间免费进行核酸检测和抗体检测",
+            "out_desc": "出行无需核酸证明，如非必要不要前往中高风险地区。",
+            "province_block_id_str": "1688494635095117",
+            "province_code": "42",
+            "province_name": "湖北",
+            "risk_level": 1
+        }
+    }
 }
 ```
 
