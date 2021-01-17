@@ -52,4 +52,6 @@ Route.group(() => {
   Route.get('live/qqlive', 'LiveController.qqlive');
 
   Route.any('tran/youdao', 'TranslateController.youdao');
+
+  Route.any('avoid/travel', 'CovidController.travel');
 }).prefix(`api/${ApiVersion}`);
