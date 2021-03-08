@@ -493,12 +493,11 @@ class CrawlerController {
 
       await page.goto(url);
 
-      const TARGET_SELECTED = 'body';
+      const TARGET_SELECTED = '.suit_cont';
 
       const huangli_list = await page.evaluate((TARGET_SELECTED) => {
-        let elements1 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > .neirong_Yi_Ji`));
-        let elements2 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > .neirong_Yi_Ji2`));
-        let elements3 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > .neirong_txt2 > div`));
+        let elements1 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > p > span`));
+
         let texts1 = elements1.map((em) => {
           let row_data = em.innerText;
           return {
@@ -506,26 +505,44 @@ class CrawlerController {
           };
         });
 
-        let texts2 = elements2.map((em) => {
-          let row_data = em.innerText;
-          return {
-            row_data
-          };
-        });
-
-        let texts3 = elements3.map((em) => {
-          let row_data = em.innerText;
-       
-          return {
-            row_data
-          };
-        });
-
-        return {texts1, texts2, texts3};
+        return {texts1};
       }, TARGET_SELECTED);
 
+      const TARGET_SELECTED1 = '.taboo_cont';
+
+      const huangli_list1 = await page.evaluate((TARGET_SELECTED1) => {
+        let elements1 = Array.from(document.querySelectorAll(`${TARGET_SELECTED1} > p > span`));
+
+        let texts1 = elements1.map((em) => {
+          let row_data = em.innerText;
+          return {
+            row_data
+          };
+        });
+
+        return {texts1};
+      }, TARGET_SELECTED1);
+
+      const TARGET_SELECTED2 = '.date_suit_table';
+
+      const huangli_list2 = await page.evaluate((TARGET_SELECTED2) => {
+        let elements1 = Array.from(document.querySelectorAll(`${TARGET_SELECTED2} > tbody > tr > td > p`));
+
+        let texts1 = elements1.map((em) => {
+          let row_data = em.innerText;
+          return {
+            row_data
+          };
+        });
+
+        return {texts1};
+      }, TARGET_SELECTED2);
   
-      const data = {huangli_list};
+      const data = {
+        suitable: huangli_list.texts1,
+        taboo: huangli_list1.texts1,
+        luck_ferocious: [huangli_list2.texts1][0],
+      };
 
       browser.close();
       return response.json({
