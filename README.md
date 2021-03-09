@@ -55,6 +55,7 @@ git push
 | 9   | /v1.0/live/zhanqi    |           战旗直播源           | active |
 | 10  | /v1.0/live/bilibili  |           B站直播源            | active |
 | 11  | /v1.0/avoid/travel   |           头条隔离政策查询      | active |
+| 12  | /v1.0/analyze/douyin |           抖音短视频解析        | active |
 
 ### API 接口
 
@@ -501,6 +502,37 @@ slmgr /ato
             "risk_level": 1
         }
     }
+}
+```
+
+
+#### 12、抖音短视频解析
+
+- 说明：请求参数需要视频分享的链接如（https://v.douyin.com/eReT43D）
+
+##### Request
+
+- Method: **GET**
+- URL:
+  - crawler url: [/api/v1.0/analyze/douyin](https://hiphup-api.herokuapp.com/api/v1.0/analyze/douyin)
+- Headers：
+- Params:
+
+```json
+{
+  "url": "https://v.douyin.com/eReT43D"
+}
+```
+
+##### Response
+
+- Body
+
+```json
+{
+  "code": 200,
+  "message": "ok",
+  "data": "https://aweme.snssdk.com/aweme/v1/play/?video_id=v0300fff0000c0lmr8kf43g0fjthuuv0&ratio=720p&line=0"
 }
 ```
 
