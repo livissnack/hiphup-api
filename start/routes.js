@@ -52,6 +52,8 @@ Route.group(() => {
   Route.get('live/qqlive', 'LiveController.qqlive');
 
   Route.get('analyze/douyin', 'ShortVideoController.douyin');
+  Route.get('analyze/kuaishou', 'ShortVideoController.kuaishou');
+  Route.get('analyze/tiktok', 'ShortVideoController.tiktok');
 
   Route.any('tran/youdao', 'TranslateController.youdao');
 
