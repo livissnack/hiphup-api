@@ -22,9 +22,9 @@ class ShortVideoController {
     if (data.status_code !== 0) {
       return response.json({ code: 500, message: 'no' });
     }
-
     let really_video_url = [data.item_list][0][0]['video']['play_addr']['url_list'][0]
     let really_cover_url = [data.item_list][0][0]['video']['origin_cover']['url_list'][0]
+    let really_music_url = [data.item_list][0][0]['music']['play_url']['url_list'][0]
     let desc_text = [data.item_list][0][0]['desc']
     if (!is_empty(really_video_url)) {
       return response.json({
@@ -32,6 +32,7 @@ class ShortVideoController {
         message: 'ok',
         data: {
           video_url: really_video_url.replace('playwm', 'play'),
+          music_url: really_music_url,
           cover_url: really_cover_url,
           desc: desc_text
         }});
@@ -40,14 +41,16 @@ class ShortVideoController {
     return response.json({ code: 500, message: 'douyin url parse failure!' });
   }
 
-  async tiktok({ request, response }) {
-    const url = request.input('url', 'https://www.tiktok.com/@tiktok/video/6807491984882765062');
-
+  async xigua({ request, response }) {
+    const url = request.input('url', 'https://m.ixigua.com/video/6776683272152809997');
+    // let { headers } = await axios.get(url, { maxRedirects: 0, validateStatus: null })
+    // return headers
+    // const redirect_url = headers.location
+    // return redirect_url
 
     const { data } = await http_get(url, {}, {
-      'accept-encoding': 'gzip, deflate, br',
-      'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7,zh-TW;q=0.6,pl;q=0.5',
-      'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'
+      'accept': '*/*',
+      'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'
     });
 
     return data

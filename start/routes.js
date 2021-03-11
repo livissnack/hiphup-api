@@ -53,7 +53,7 @@ Route.group(() => {
 
   Route.get('analyze/douyin', 'ShortVideoController.douyin');
   Route.get('analyze/kuaishou', 'ShortVideoController.kuaishou');
-  Route.get('analyze/tiktok', 'ShortVideoController.tiktok');
+  Route.get('analyze/xigua', 'ShortVideoController.xigua');
 
   Route.any('tran/youdao', 'TranslateController.youdao');
 
