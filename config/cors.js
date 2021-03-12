@@ -16,7 +16,7 @@ module.exports = {
   | Function - Receives the current origin and should return one of the above values.
   |
   */
-  origin: ['https://live.doniai.com', 'https://nav.doniai.com', 'http://localhost:8097', 'http://parser.doniai.tets', 'https://parser.doniai.com'],
+  origin: ['https://live.doniai.com', 'https://nav.doniai.com', 'http://localhost:8097', 'http://parser.doniai.test', 'https://parser.doniai.com'],
 
   /*
   |--------------------------------------------------------------------------
