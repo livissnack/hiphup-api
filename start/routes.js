@@ -52,6 +52,7 @@ Route.group(() => {
   Route.get('live/qqlive', 'LiveController.qqlive');
 
   Route.get('analyze/douyin', 'ShortVideoController.douyin');
+  Route.get('util/douyin', 'UtilController.douyin_redirect');
   Route.get('analyze/kuaishou', 'ShortVideoController.kuaishou');
   Route.get('analyze/xigua', 'ShortVideoController.xigua');
 
