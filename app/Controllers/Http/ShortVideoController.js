@@ -1,5 +1,6 @@
 'use strict'
 
+const puppeteer = use('puppeteer');
 const urlParse = require('url');
 const axios = require('axios');
 const {
@@ -135,6 +136,40 @@ class ShortVideoController {
     }
 
     return response.json({ code: 500, message: 'kuaishou url parse failure!' });
+  }
+
+
+  async bilibili({ request, response }) {
+    try {
+      const url = request.input('url', 'https://www.bilibili.com/bangumi/play/ep425731?spm_id_from=333.851.b_7265706f7274466972737432.5');
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '–disable-gpu',
+          '–disable-dev-shm-usage',
+          '–no-first-run',
+          '–no-zygote',
+          '–single-process',
+        ],
+      });
+      const page = await browser.newPage();
+      await page.emulate(puppeteer.devices['iphone 6']); //模拟iphone6打开页面
+      await page.goto(url); //进入指定网页
+      // const result = await page.evaluate((item) => {
+      //   console.log(item)
+      //   let url = document.querySelector('.player-box > video').src;
+      //   return {
+      //     url
+      //   }
+      // }, item);
+      browser.close();
+      return 'adasd'
+      // return response.json({ code: 200, data: element, message: 'ok' });
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() });
+    }
   }
 }
 

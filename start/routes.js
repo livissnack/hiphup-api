@@ -55,6 +55,7 @@ Route.group(() => {
   Route.get('util/douyin', 'UtilController.douyin_redirect');
   Route.get('analyze/kuaishou', 'ShortVideoController.kuaishou');
   Route.get('analyze/xigua', 'ShortVideoController.xigua');
+  Route.get('analyze/bilibili', 'ShortVideoController.bilibili');
 
   Route.any('tran/youdao', 'TranslateController.youdao');
 

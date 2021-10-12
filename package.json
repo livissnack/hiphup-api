@@ -32,12 +32,13 @@
     "dayjs": "^1.8.29",
     "exceljs": "^3.8.2",
     "mysql": "^2.18.1",
-    "puppeteer": "^1.20.0",
     "qrcode": "^1.4.4",
-    "set-value": "^3.0.2"
+    "set-value": "^3.0.2",
+    "style-to-object": "^0.3.0"
   },
   "devDependencies": {
-    "knex": ">=0.19.5"
+    "knex": ">=0.19.5",
+    "puppeteer": "^10.4.0"
   },
   "autoload": {
     "App": "./app"

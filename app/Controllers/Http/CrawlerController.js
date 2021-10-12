@@ -1,6 +1,7 @@
 'use strict';
 
 const puppeteer = use('puppeteer');
+const parse = use('style-to-object');
 const { egg_combine_jiameixian, group_arr, is_empty } = require('../../Tools/helper');
 
 class CrawlerController {
@@ -60,7 +61,7 @@ class CrawlerController {
           break;
 
         case 'toutiao':
-          const TOUTIAO_SELECTED = '.wcommonFeed ul li a';
+          const TOUTIAO_SELECTED = '.feed-card-article-l > a';
           list = await page.evaluate((TOUTIAO_SELECTED) => {
             let elements = Array.from(
               document.querySelectorAll(TOUTIAO_SELECTED)
@@ -300,11 +301,14 @@ class CrawlerController {
 
       await page.goto(url);
 
-      const sel = '#bgImgProgLoad';
+      const sel = '.img_cont';
 
-      const res = await page.$eval(sel, (e) => {
-        return e.getAttribute('data-ultra-definition-src');
+      let style = await page.$eval(sel, (e) => {
+        return e.getAttribute('style');
       });
+      let imgSrc = parse(style)['background-image'];
+      let reg = /[^\(\)]+(?=\))/g;
+      let res = imgSrc.match(reg)[0];
       browser.close();
       const bgUrl = `${url}${res}`;
       return response.json({ code: 200, data: bgUrl, message: 'ok' });
@@ -385,23 +389,23 @@ class CrawlerController {
 
       await page.goto(url);
 
-      const TARGET_SELECTED = '.kjGg';
+      const TARGET_SELECTED = '.notice-content';
 
       const shuangseqiu = await page.evaluate((TARGET_SELECTED) => {
-        let elements1 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > .kjgg01 > .kjggL > .kjxx > em`));
-        let elements2 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > .kjgg01 > .kjggL > ul > li`));
+        let elements1 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > .notice-content-title > span`));
+        let elements2 = Array.from(document.querySelectorAll(`${TARGET_SELECTED} > .qiu > .qiu-item`));
         let texts1 = elements1.map((em) => {
           return {
             title: em.innerText,
           };
         });
 
-        let texts2 = elements2.map((li) => {
+        let texts2 = elements2.map((div) => {
           return {
-            title: li.innerText,
+            title: div.innerText,
           };
         });
-        return {name: texts1[0]['title'], amount: texts1[1]['title'], result: texts2};
+        return {name: texts1[0]['title'], amount: texts1[1]['title'], result: texts2.slice(0, 7)};
       }, TARGET_SELECTED);
 
   
