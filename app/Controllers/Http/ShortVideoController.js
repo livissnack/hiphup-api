@@ -165,8 +165,10 @@ class ShortVideoController {
         let element = document.querySelector(QICHUN_SELECTED);
         console.log(element)
         return {
-          url: element.src.trim(),
-          title: element.poster,
+          video_url: element.src.trim(),
+          music_url: '',
+          cover_url: element.poster,
+          desc: '系统捕获',
         };
       }, QICHUN_SELECTED);
 
