@@ -8,6 +8,7 @@ const {
   http_post,
   is_empty,
 } = require('../../Tools/helper');
+const iPhone = puppeteer.devices['iPhone X'];
 
 class ShortVideoController {
 
@@ -141,7 +142,7 @@ class ShortVideoController {
 
   async bilibili({ request, response }) {
     try {
-      const url = request.input('url', 'https://www.bilibili.com/bangumi/play/ep425731?spm_id_from=333.851.b_7265706f7274466972737432.5');
+      const url = request.input('url', 'https://m.bilibili.com/video/av70663655.html?from=search');
       const browser = await puppeteer.launch({
         headless: true,
         args: [
@@ -155,18 +156,22 @@ class ShortVideoController {
         ],
       });
       const page = await browser.newPage();
-      await page.emulate(puppeteer.devices['iphone 6']); //模拟iphone6打开页面
+      await page.emulate(iPhone); //模拟iphone6打开页面
       await page.goto(url); //进入指定网页
-      // const result = await page.evaluate((item) => {
-      //   console.log(item)
-      //   let url = document.querySelector('.player-box > video').src;
-      //   return {
-      //     url
-      //   }
-      // }, item);
+
+
+      const QICHUN_SELECTED = '#bilibiliPlayer > .mplayer > .mplayer-video-wrap > video';
+      let result = await page.evaluate((QICHUN_SELECTED) => {
+        let element = document.querySelector(QICHUN_SELECTED);
+        console.log(element)
+        return {
+          url: element.src.trim(),
+          title: element.poster,
+        };
+      }, QICHUN_SELECTED);
+
       browser.close();
-      return 'adasd'
-      // return response.json({ code: 200, data: element, message: 'ok' });
+      return response.json({ code: 200, data: result, message: 'ok' });
     } catch (error) {
       return response.json({ code: 500, message: error.toString() });
     }
