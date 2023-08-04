@@ -21,3 +21,5 @@ database/development.sqlite
 ecosystem.config.js
 deploy.sh
 proxy.js
+download
+/download/

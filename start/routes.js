@@ -20,7 +20,7 @@ const Route = use('Route');
 Route.get('/', 'IndexController.index');
 
 Route.get('gt/register-click', 'CaptchaController.valid');
-Route.get('test', 'TestController.index');
+Route.get('test', 'TestController.huaben');
 Route.get('qrcode', 'QrcodeController.index');
 
 Route.group(() => {

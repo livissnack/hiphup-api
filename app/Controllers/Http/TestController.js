@@ -1,8 +1,13 @@
 'use strict';
 
-const { random_str, two_color_ball } = require('../../Tools/helper');
+const { random_str, two_color_ball, httpString } = require('../../Tools/helper');
 const urlParse = require('url');
 const axios = require('axios');
+const puppeteer = use('puppeteer');
+const fs = require('fs');
+const DownloadService = use('App/Services/DownloadService');
+const ImportService = use('App/Services/ImportService');
+const ExportService = use('App/Services/ExportService');
 
 class TestController {
   async index() {
@@ -11,6 +16,19 @@ class TestController {
     const redirect_url = headers.location
     return redirect_url
     return random_str(8, { letters: true, numbers: true, specials: false });
+  }
+
+  async huaben({ request, response }) {
+
+    let downloadArr = await ImportService.ImportClassification('download/download1.xlsx')
+    downloadArr.shift()
+    for (const item of downloadArr) {
+      const index1 = downloadArr.indexOf(item);
+      let fileName = item[1]
+      let downloadUrl = item[2]
+      await DownloadService.HandleDownload(fileName, downloadUrl)
+    }
+    return downloadArr
   }
 }
 
