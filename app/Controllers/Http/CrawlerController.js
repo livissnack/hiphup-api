@@ -2,6 +2,7 @@
 
 const puppeteer = use('puppeteer');
 const parse = use('style-to-object');
+const _ = use('lodash');
 const { egg_combine_jiameixian, group_arr, is_empty } = require('../../Tools/helper');
 
 class CrawlerController {
@@ -69,7 +70,7 @@ class CrawlerController {
             let texts = elements.map((a) => {
               return {
                 url: a.href.trim(),
-                title: a.innerText,
+                title: a.getAttribute('aria-label'),
               };
             });
             return texts;
@@ -93,7 +94,7 @@ class CrawlerController {
           break;
 
         case 'yahoo':
-          const YAHOO_SELECTED = '#YDC-Stream ul li h3 a';
+          const YAHOO_SELECTED = '.stream-title';
           list = await page.evaluate((YAHOO_SELECTED) => {
             let elements = Array.from(
               document.querySelectorAll(YAHOO_SELECTED)
@@ -109,14 +110,14 @@ class CrawlerController {
           break;
 
         case 'apnews':
-          const APNEWS_SELECTED = '.cards FeedCard Component-headline-0-2-29';
+          const APNEWS_SELECTED = '.Link';
           list = await page.evaluate((APNEWS_SELECTED) => {
             let elements = Array.from(
               document.querySelectorAll(APNEWS_SELECTED)
             );
             let texts = elements.map((a) => {
               return {
-                url: a.href.trim(),
+                url: a.href,
                 title: a.innerText,
               };
             });
@@ -552,6 +553,153 @@ class CrawlerController {
       return response.json({
         code: 200,
         data: data,
+        message: 'ok',
+      });
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() });
+    }
+  }
+
+  async eslist({ request, response }) {
+    const page = request.input('page', 1)
+    const url = request.input(
+      'url',
+      `https://www.right.com.cn/forum/forum-182-${page}.html`
+    );
+    try {
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '–disable-gpu',
+          '–disable-dev-shm-usage',
+          '–no-first-run',
+          '–no-zygote',
+          '–single-process',
+        ],
+      });
+
+      const page = await browser.newPage();
+
+      await page.goto(url);
+
+      const BAIDU_SELECTED = '#moderate > #threadlisttableid > tbody > tr > th > .xst';
+      let list = await page.evaluate((BAIDU_SELECTED) => {
+        let elements = Array.from(
+          document.querySelectorAll(BAIDU_SELECTED)
+        );
+        let texts = elements.map((em, index) => {
+          return {
+            url: em.href,
+            title: em.innerText,
+          };
+        });
+        return texts;
+      }, BAIDU_SELECTED);
+
+      browser.close();
+
+      list = _.drop(list, 7)
+      return response.json({
+        code: 200,
+        data: list,
+        message: 'ok',
+      });
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() });
+    }
+  }
+
+  async v2ex({ request, response }) {
+    const page = request.input('page', 1)
+    const url = request.input(
+      'url',
+      `https://www.v2ex.com/?tab=qna`
+    );
+    try {
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '–disable-gpu',
+          '–disable-dev-shm-usage',
+          '–no-first-run',
+          '–no-zygote',
+          '–single-process',
+        ],
+      });
+
+      const page = await browser.newPage();
+
+      await page.goto(url);
+
+      const BAIDU_SELECTED = '#Main >.box > .cell > table > tbody > tr > td > .item_title > .topic-link';
+      let list = await page.evaluate((BAIDU_SELECTED) => {
+        let elements = Array.from(
+          document.querySelectorAll(BAIDU_SELECTED)
+        );
+        let texts = elements.map((em, index) => {
+          return {
+            url: em.href,
+            title: em.innerText,
+          };
+        });
+        return texts;
+      }, BAIDU_SELECTED);
+
+      browser.close();
+
+      list = _.drop(list, 7)
+      return response.json({
+        code: 200,
+        data: list,
+        message: 'ok',
+      });
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() });
+    }
+  }
+
+  async tv({ request, response }) {
+    const url = request.input('url','http://www.wfcmw.cn/wfrtv/wlpd_zb/');
+    try {
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '–disable-gpu',
+          '–disable-dev-shm-usage',
+          '–no-first-run',
+          '–no-zygote',
+          '–single-process',
+        ],
+      });
+
+      const page = await browser.newPage();
+
+      await page.goto(url);
+
+      const BAIDU_SELECTED = '.con > .wl-liebiao > li > img';
+      let list = await page.evaluate((BAIDU_SELECTED) => {
+        let elements = Array.from(
+          document.querySelectorAll(BAIDU_SELECTED)
+        );
+        let texts = elements.map((em) => {
+          return {
+            tvlogo: em.src.trim(),
+            m3u8: em.getAttribute('data-url'),
+          };
+        });
+        return texts;
+      }, BAIDU_SELECTED);
+
+      browser.close();
+      return response.json({
+        code: 200,
+        data: list,
         message: 'ok',
       });
     } catch (error) {
