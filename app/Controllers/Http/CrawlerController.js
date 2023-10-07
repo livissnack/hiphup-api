@@ -3,6 +3,7 @@
 const puppeteer = use('puppeteer');
 const parse = use('style-to-object');
 const _ = use('lodash');
+const iPhone = puppeteer.devices['iPhone X'];
 const { egg_combine_jiameixian, group_arr, is_empty } = require('../../Tools/helper');
 
 class CrawlerController {
@@ -409,7 +410,7 @@ class CrawlerController {
         return {name: texts1[0]['title'], amount: texts1[1]['title'], result: texts2.slice(0, 7)};
       }, TARGET_SELECTED);
 
-  
+
       const data = {'shuangseqiu': shuangseqiu};
 
       browser.close();
@@ -461,7 +462,7 @@ class CrawlerController {
         return {name: texts1};
       }, TARGET_SELECTED);
 
-  
+
       const data = {'proxy_list': proxy_list};
 
       browser.close();
@@ -542,7 +543,7 @@ class CrawlerController {
 
         return {texts1};
       }, TARGET_SELECTED2);
-  
+
       const data = {
         suitable: huangli_list.texts1,
         taboo: huangli_list1.texts1,
@@ -691,6 +692,97 @@ class CrawlerController {
           return {
             tvlogo: em.src.trim(),
             m3u8: em.getAttribute('data-url'),
+          };
+        });
+        return texts;
+      }, BAIDU_SELECTED);
+
+      browser.close();
+      return response.json({
+        code: 200,
+        data: list,
+        message: 'ok',
+      });
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() });
+    }
+  }
+
+  async hktv({ request, response }) {
+    const url = request.input('url','https://iptv222.com/?tid=gt');
+    try {
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '–disable-gpu',
+          '–disable-dev-shm-usage',
+          '–no-first-run',
+          '–no-zygote',
+          '–single-process',
+        ],
+      });
+
+      const page = await browser.newPage();
+
+      await page.emulate(iPhone); //模拟iphone6打开页面
+      await page.goto(url);
+
+      const BAIDU_SELECTED = '.ui-content > ul > li > div > div > a';
+      let list = await page.evaluate((BAIDU_SELECTED) => {
+        let elements = Array.from(
+          document.querySelectorAll(BAIDU_SELECTED)
+        );
+        let texts = elements.map((em) => {
+          return {
+            play_url: em.href,
+            name: em.innerText,
+          };
+        });
+        return texts;
+      }, BAIDU_SELECTED);
+
+      browser.close();
+      return response.json({
+        code: 200,
+        data: list,
+        message: 'ok',
+      });
+    } catch (error) {
+      return response.json({ code: 500, message: error.toString() });
+    }
+  }
+
+  async lztv({ request, response }) {
+    const url = request.input('url', 'http://lzizy.com/index.php/vod/type/id/13.html');
+    try {
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '–disable-gpu',
+          '–disable-dev-shm-usage',
+          '–no-first-run',
+          '–no-zygote',
+          '–single-process',
+        ],
+      });
+
+      const page = await browser.newPage();
+
+      await page.goto(url);
+
+      const BAIDU_SELECTED = '.videoContent > li > .videoName';
+      let list = await page.evaluate((BAIDU_SELECTED) => {
+        let elements = Array.from(
+          document.querySelectorAll(BAIDU_SELECTED)
+        );
+        let texts = elements.map((em) => {
+          return {
+            play_url: em.href,
+            name: em.innerText,
           };
         });
         return texts;

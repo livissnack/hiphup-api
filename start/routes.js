@@ -36,6 +36,8 @@ Route.group(() => {
   Route.get(`crawler/tv`, 'CrawlerController.tv');
   Route.get(`crawler/eslist`, 'CrawlerController.eslist');
   Route.get(`crawler/v2ex`, 'CrawlerController.v2ex');
+  Route.get(`crawler/hktv`, 'CrawlerController.hktv');
+  Route.get(`crawler/lztv`, 'CrawlerController.lztv');
 
   Route.post('import', 'ExcelController.import');
   Route.get('export', 'ExcelController.export');
